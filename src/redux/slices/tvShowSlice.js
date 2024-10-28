@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchTVShow = createAsyncThunk("tvShow/fetchTVShow", async () => {
-  const response = await axios.get(
-    "https://phimapi.com/v1/api/danh-sach/tv-shows"
-  );
-  return response.data.data.items;
-});
+export const fetchTVShow = createAsyncThunk(
+  "tvShow/fetchTVShow",
+  async (page = 1) => {
+    const response = await axios.get(
+      `https://phimapi.com/v1/api/danh-sach/tv-shows?page=${page}`
+    );
+    return response.data;
+  }
+);
 
 const tvShowSlice = createSlice({
   name: "tvShow",
@@ -14,8 +17,14 @@ const tvShowSlice = createSlice({
     items: [],
     status: "idle",
     error: null,
+    totalPages: 0,
+    currentPage: 1,
   },
-  reducers: {},
+  reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTVShow.pending, (state) => {
@@ -23,7 +32,9 @@ const tvShowSlice = createSlice({
       })
       .addCase(fetchTVShow.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload;
+        state.items = action.payload.data.items || [];
+        state.totalPages =
+          action.payload.data.params.pagination.totalPages || 0;
       })
       .addCase(fetchTVShow.rejected, (state, action) => {
         state.status = "failed";
@@ -31,5 +42,5 @@ const tvShowSlice = createSlice({
       });
   },
 });
-
+export const { setCurrentPage } = tvShowSlice.actions;
 export default tvShowSlice.reducer;

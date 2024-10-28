@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchSeries = createAsyncThunk("series/fetchSeries", async () => {
-  const response = await axios.get(
-    "https://phimapi.com/v1/api/danh-sach/phim-bo"
-  );
-  return response.data.data.items;
-});
+export const fetchSeries = createAsyncThunk(
+  "series/fetchSeries",
+  async (page = 1) => {
+    const response = await axios.get(
+      `https://phimapi.com/v1/api/danh-sach/phim-bo?page=${page}`
+    );
+    return response.data;
+  }
+);
 
 const seriesSlice = createSlice({
   name: "series",
@@ -14,8 +17,14 @@ const seriesSlice = createSlice({
     items: [],
     status: "idle",
     error: null,
+    totalPages: 0,
+    currentPage: 1,
   },
-  reducers: {},
+  reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSeries.pending, (state) => {
@@ -23,7 +32,9 @@ const seriesSlice = createSlice({
       })
       .addCase(fetchSeries.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload;
+        state.items = action.payload.data.items || [];
+        state.totalPages =
+          action.payload.data.params.pagination.totalPages || 0;
       })
       .addCase(fetchSeries.rejected, (state, action) => {
         state.status = "failed";
@@ -32,4 +43,5 @@ const seriesSlice = createSlice({
   },
 });
 
+export const { setCurrentPage } = seriesSlice.actions;
 export default seriesSlice.reducer;

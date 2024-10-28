@@ -1,18 +1,25 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingle } from "../../redux/slices/singleSlice";
+import { fetchSingle, setCurrentPage } from "../../redux/slices/singleSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
+
 const SingleMovies = () => {
   const dispatch = useDispatch();
   const phimLe = useSelector((state) => state.phimLe.items);
   const status = useSelector((state) => state.phimLe.status);
   const error = useSelector((state) => state.phimLe.error);
-
+  const currentPage = useSelector((state) => state.phimLe.currentPage);
+  const totalPages = useSelector((state) => state.phimLe.totalPages);
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchSingle());
+      dispatch(fetchSingle(currentPage));
     }
-  }, [status, dispatch]);
+  }, [status, dispatch, currentPage]);
+
+  const handlePageChange = (newPage) => {
+    dispatch(setCurrentPage(newPage));
+    dispatch(fetchSingle(newPage));
+  };
 
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Error: {error}</div>;
@@ -52,6 +59,23 @@ const SingleMovies = () => {
           </li>
         ))}
       </ul>
+      <div className="flex justify-center gap-5 py-10">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          &larr;  
+        </button>
+        <div>
+          {currentPage} / {totalPages}
+        </div>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          &rarr;
+        </button>
+      </div>
     </div>
   );
 };

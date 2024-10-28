@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTVShow } from "../../redux/slices/tvShowSlice";
+import { fetchTVShow, setCurrentPage } from "../../redux/slices/tvShowSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 
 const TVShows = () => {
@@ -8,12 +8,18 @@ const TVShows = () => {
   const tvShows = useSelector((state) => state.tvShows.items);
   const status = useSelector((state) => state.tvShows.status);
   const error = useSelector((state) => state.tvShows.error);
-
+  const currentPage = useSelector((state) => state.tvShows.currentPage);
+  const totalPages = useSelector((state) => state.tvShows.totalPages);
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchTVShow());
+      dispatch(fetchTVShow(currentPage));
     }
-  }, [status, dispatch]);
+  }, [status, dispatch, currentPage]);
+
+  const handlePageChange = (newPage) => {
+    dispatch(setCurrentPage(newPage));
+    dispatch(fetchTVShow(newPage));
+  };
 
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Error: {error}</div>;
@@ -53,6 +59,23 @@ const TVShows = () => {
           </li>
         ))}
       </ul>
+      <div className="flex justify-center gap-5 py-10">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          &larr;
+        </button>
+        <div>
+          {currentPage} / {totalPages}
+        </div>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          &rarr;
+        </button>
+      </div>
     </div>
   );
 };

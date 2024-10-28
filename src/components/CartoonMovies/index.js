@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartoon } from "../../redux/slices/cartoonSlice";
+import { fetchCartoon, setCurrentPage } from "../../redux/slices/cartoonSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 
 const CartoonMovies = () => {
@@ -8,12 +8,18 @@ const CartoonMovies = () => {
   const hoatHinh = useSelector((state) => state.hoatHinh.items);
   const status = useSelector((state) => state.hoatHinh.status);
   const error = useSelector((state) => state.hoatHinh.error);
-
+  const currentPage = useSelector((state) => state.hoatHinh.currentPage);
+  const totalPages = useSelector((state) => state.hoatHinh.totalPages);
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchCartoon());
+      dispatch(fetchCartoon(currentPage));
     }
-  }, [status, dispatch]);
+  }, [status, dispatch, currentPage]);
+
+  const handlePageChange = (newPage) => {
+    dispatch(setCurrentPage(newPage));
+    dispatch(fetchCartoon(newPage));
+  };
 
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Error: {error}</div>;
@@ -52,7 +58,24 @@ const CartoonMovies = () => {
             </div>
           </li>
         ))}
-      </ul>
+      </ul>{" "}
+      <div className="flex justify-center gap-5 py-10">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          &larr;
+        </button>
+        <div>
+          {currentPage} / {totalPages}
+        </div>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          &rarr;
+        </button>
+      </div>
     </div>
   );
 };

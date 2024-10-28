@@ -3,11 +3,11 @@ import axios from "axios";
 
 export const fetchCartoon = createAsyncThunk(
   "cartoon/fetchCartoon",
-  async () => {
+  async (page = 1) => {
     const response = await axios.get(
-      "https://phimapi.com/v1/api/danh-sach/hoat-hinh"
+      `https://phimapi.com/v1/api/danh-sach/hoat-hinh?page=${page}`
     );
-    return response.data.data.items;
+    return response.data;
   }
 );
 
@@ -17,8 +17,14 @@ const cartoonSlice = createSlice({
     items: [],
     status: "idle",
     error: null,
+    totalPages: 0,
+    currentPage: 1,
   },
-  reducers: {},
+  reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCartoon.pending, (state) => {
@@ -26,7 +32,8 @@ const cartoonSlice = createSlice({
       })
       .addCase(fetchCartoon.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload;
+        state.items = action.payload.data.items || [];
+        state.totalPages = action.payload.data.params.pagination.totalPages || 0;
       })
       .addCase(fetchCartoon.rejected, (state, action) => {
         state.status = "failed";
@@ -34,5 +41,5 @@ const cartoonSlice = createSlice({
       });
   },
 });
-
+export const { setCurrentPage } = cartoonSlice.actions;
 export default cartoonSlice.reducer;
