@@ -3,6 +3,7 @@ import phimLeReducer from "./slices/singleSlice";
 import phimBoReducer from "./slices/seriesSlice";
 import hoatHinhReducer from "./slices/cartoonSlice";
 import tvShowsReducer from "./slices/tvShowSlice";
+import searchReducer from "./slices/searchSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     phimBo: phimBoReducer,
     hoatHinh: hoatHinhReducer,
     tvShows: tvShowsReducer,
+    search: searchReducer,
   },
 });
 

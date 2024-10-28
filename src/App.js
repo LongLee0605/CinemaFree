@@ -1,12 +1,13 @@
 // App.js
 import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
+import CartoonMovies from "./components/CartoonMovies";
+import SearchMovies from "./components/Search";
+import SeriesMovies from "./components/SeriesMovies";
 import SingleMovies from "./components/SingleMovies";
 import TVShows from "./components/TVShows";
-import SeriesMovies from "./components/SeriesMovies";
-import CartoonMovies from "./components/CartoonMovies";
 import store from "./redux/store";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
+          <SearchMovies />
           <nav>
             <ul className="flex gap-10">
               <li>
