@@ -4,10 +4,11 @@ import { Provider } from "react-redux";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import CartoonMovies from "./components/CartoonMovies";
-import SearchMovies from "./components/Search";
 import SeriesMovies from "./components/SeriesMovies";
 import SingleMovies from "./components/SingleMovies";
 import TVShows from "./components/TVShows";
+import SearchInput from "./components/Search/components/SearchInput";
+import SearchResults from "./components/Search/components/SearchResults";
 import store from "./redux/store";
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
-          <SearchMovies />
+          <SearchInput />
           <nav>
             <ul className="flex gap-10">
               <li>
@@ -38,6 +39,7 @@ function App() {
             <Route path="/series-movies" element={<SeriesMovies />} />
             <Route path="/cartoon-movies" element={<CartoonMovies />} />
             <Route path="/tv-shows" element={<TVShows />} />
+            <Route path="/search" element={<SearchResults />} />
           </Routes>
         </div>
       </Router>

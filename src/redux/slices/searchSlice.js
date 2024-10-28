@@ -8,6 +8,7 @@ export const fetchSearchResults = createAsyncThunk(
     const response = await axios.get(
       `https://phimapi.com/v1/api/tim-kiem?keyword=${keyword}&limit=${limit}`
     );
+    console.log(response.data); // kiểm tra dữ liệu trả về từ API
     return response.data;
   }
 );
