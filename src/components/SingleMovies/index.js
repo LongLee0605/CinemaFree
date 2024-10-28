@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingle, setCurrentPage } from "../../redux/slices/singleSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const SingleMovies = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const SingleMovies = () => {
   const error = useSelector((state) => state.phimLe.error);
   const currentPage = useSelector((state) => state.phimLe.currentPage);
   const totalPages = useSelector((state) => state.phimLe.totalPages);
+
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchSingle(currentPage));
@@ -30,9 +32,11 @@ const SingleMovies = () => {
       <ul>
         {phimLe.map((movie) => (
           <li key={movie._id} className="py-4">
-            <h3 className="py-2">
-              {movie.name} ({movie.year})
-            </h3>
+            <Link to={`/movie/${movie.slug}`}> {/* Use Link to navigate to detail page */}
+              <h3 className="py-2">
+                {movie.name} ({movie.year})
+              </h3>
+            </Link>
             <div className="flex gap-10">
               <div>
                 <img

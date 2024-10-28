@@ -4,11 +4,12 @@ import { Provider } from "react-redux";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import CartoonMovies from "./components/CartoonMovies";
+import MovieDetails from "./components/Details";
+import SearchInput from "./components/Search/components/SearchInput";
+import SearchResults from "./components/Search/components/SearchResults";
 import SeriesMovies from "./components/SeriesMovies";
 import SingleMovies from "./components/SingleMovies";
 import TVShows from "./components/TVShows";
-import SearchInput from "./components/Search/components/SearchInput";
-import SearchResults from "./components/Search/components/SearchResults";
 import store from "./redux/store";
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
 
           <Routes>
             <Route path="/single-movies" element={<SingleMovies />} />
+            <Route path="/movie/:slug" element={<MovieDetails />} />
             <Route path="/series-movies" element={<SeriesMovies />} />
             <Route path="/cartoon-movies" element={<CartoonMovies />} />
             <Route path="/tv-shows" element={<TVShows />} />
