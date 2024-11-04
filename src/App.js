@@ -6,12 +6,12 @@ import {
   BrowserRouter as Router,
   Routes,
   useLocation,
-  Navigate, // Import Navigate
 } from "react-router-dom";
 
 import CartoonMovies from "./components/CartoonMovies";
 import MovieDetails from "./components/Details";
 import Home from "./components/Home";
+import NewMovies from "./components/NewMovies";
 import SearchInput from "./components/Search/components/SearchInput";
 import SearchResults from "./components/Search/components/SearchResults";
 import SeriesMovies from "./components/SeriesMovies";
@@ -30,16 +30,19 @@ const App = () => {
       <nav>
         <ul className="flex gap-10">
           <li>
+            <Link to="/">Trang chủ</Link>
+          </li>
+          <li>
             <Link to="/phim-moi-cap-nhat">Phim mới cập nhật</Link>
           </li>
           <li>
-            <Link to="/single-movies">Phim lẻ</Link>
+            <Link to="/phim-le">Phim lẻ</Link>
           </li>
           <li>
-            <Link to="/series-movies">Phim bộ</Link>
+            <Link to="/phim-bo">Phim bộ</Link>
           </li>
           <li>
-            <Link to="/cartoon-movies">Phim hoạt hình</Link>
+            <Link to="/phim-hoat-hinh">Phim hoạt hình</Link>
           </li>
           <li>
             <Link to="/tv-shows">TV Shows</Link>
@@ -48,21 +51,21 @@ const App = () => {
       </nav>
 
       <Routes>
-        <Route path="/" element={<Navigate to="/phim-moi-cap-nhat" />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/phim-moi-cap-nhat"
-          element={<Home currentPage={currentPage} />}
+          element={<NewMovies currentPage={currentPage} />}
         />
         <Route
-          path="/single-movies"
+          path="/phim-le"
           element={<SingleMovies currentPage={currentPage} />}
         />
         <Route
-          path="/series-movies"
+          path="/phim-bo"
           element={<SeriesMovies currentPage={currentPage} />}
         />
         <Route
-          path="/cartoon-movies"
+          path="/phim-hoat-hinh"
           element={<CartoonMovies currentPage={currentPage} />}
         />
         <Route

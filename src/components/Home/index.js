@@ -1,82 +1,50 @@
-
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import {
-    fetchLatestMovies,
-    setCurrentPage,
-} from "../../redux/slices/homeSlice";
-import { formatDateTimeVN } from "../../utils/dateUtils";
-
-const Home = ({ currentPage }) => { 
+import { fetchLatestMovies } from "../../redux/slices/homeSlice";
+import { fetchSingle } from "../../redux/slices/singleSlice";
+import Carousel from "../Carousel";
+const Home = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const latestMovies = useSelector((state) => state.latestMovies.items);
-  const status = useSelector((state) => state.latestMovies.status);
-  const error = useSelector((state) => state.latestMovies.error);
-  const totalPages = useSelector((state) => state.latestMovies.totalPages);
-
+  const phimLe = useSelector((state) => state.phimLe.items);
   useEffect(() => {
-    dispatch(setCurrentPage(currentPage));
-    dispatch(fetchLatestMovies(currentPage));
-  }, [dispatch, currentPage]);
-
-  const handlePageChange = (newPage) => {
-    dispatch(setCurrentPage(newPage));
-    navigate(`?page=${newPage}`); 
-    dispatch(fetchLatestMovies(newPage));
-  };
-
-  if (status === "loading") return <div>Loading...</div>;
-
-  if (status === "failed") return <div>Error: {error}</div>;
-
+    dispatch(fetchLatestMovies());
+    dispatch(fetchSingle());
+  }, [dispatch]);
   return (
-    <div>
-      <h2>Latest Movies</h2>
-      <ul>
-        {latestMovies.map((movie) => (
-          <li key={movie._id} className="py-4">
-            <Link to={`/movie/${movie.slug}`}>
-              <h3 className="py-2">
-                {movie.name} ({movie.year})
-              </h3>
-            </Link>
-            <div className="flex gap-10">
+    <>
+      <div className="w-[1024px] bg-black h-screen mx-auto">
+        <div className="text-center py-4 border-[1px] border-[#fff9]">
+          <p className="text-sm">
+            Đây là trang web Cinema Free, chuyên Update phim mới
+          </p>
+        </div>
+        <div>
+          <div className="flex gap-5">
+            <div className="w-[70%] px-4">
               <div>
-                <img
-                  src={movie.poster_url}
-                  alt={movie.name}
-                  style={{ width: "150px" }}
-                />
+                <Carousel items={latestMovies} moviesHTTP />
               </div>
-              <div className="flex flex-col gap-2">
-                <p>Tên gốc: {movie.origin_name}</p>
-                <p>Năm ra mắt: {movie.year}</p>
-                <p>Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}</p>
+              <div>
+                <div>
+                  <h2>Phim Lẻ Mới Cập Nhật</h2>
+                </div>
+                <div>
+                  <Carousel
+                    items={phimLe}
+                    infiniteLoop={true}
+                    showDots={false}
+                    showButtons={true}
+                    moviesNoHTTP
+                  />
+                </div>
               </div>
             </div>
-          </li>
-        ))}
-      </ul>
-      <div className="flex justify-center gap-5 py-10">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          &larr;
-        </button>
-        <div>
-          {currentPage} / {totalPages}
+            <div className="w-[30%]">SideBar</div>
+          </div>
         </div>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          &rarr;
-        </button>
       </div>
-    </div>
+    </>
   );
 };
 

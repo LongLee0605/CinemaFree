@@ -1,37 +1,41 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartoon, setCurrentPage } from "../../redux/slices/cartoonSlice";
-import { formatDateTimeVN } from "../../utils/dateUtils";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  fetchLatestMovies,
+  setCurrentPage,
+} from "../../redux/slices/homeSlice";
+import { formatDateTimeVN } from "../../utils/dateUtils";
 
-const CartoonMovies = () => {
+
+function NewMovies({ currentPage }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const hoatHinh = useSelector((state) => state.hoatHinh.items);
-  const status = useSelector((state) => state.hoatHinh.status);
-  const error = useSelector((state) => state.hoatHinh.error);
-  const currentPage = useSelector((state) => state.hoatHinh.currentPage);
-  const totalPages = useSelector((state) => state.hoatHinh.totalPages);
+  const latestMovies = useSelector((state) => state.latestMovies.items);
+  const status = useSelector((state) => state.latestMovies.status);
+  const error = useSelector((state) => state.latestMovies.error);
+  const totalPages = useSelector((state) => state.latestMovies.totalPages);
+
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchCartoon(currentPage));
-    }
-  }, [status, dispatch, currentPage]);
+    dispatch(setCurrentPage(currentPage));
+    dispatch(fetchLatestMovies(currentPage));
+  }, [dispatch, currentPage]);
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
     navigate(`?page=${newPage}`);
-    dispatch(fetchCartoon(newPage));
+    dispatch(fetchLatestMovies(newPage));
   };
 
   if (status === "loading") return <div>Loading...</div>;
-  if (status === "failed") return <div>Error: {error}</div>;
 
+  if (status === "failed") return <div>Error: {error}</div>;
   return (
-    <div>
-      <h2>Phim Hoạt Hình</h2>
+    <>
+      {" "}
+      <h2>Latest Movies</h2>
       <ul>
-        {hoatHinh.map((movie) => (
+        {latestMovies.map((movie) => (
           <li key={movie._id} className="py-4">
             <Link to={`/movie/${movie.slug}`}>
               <h3 className="py-2">
@@ -41,23 +45,14 @@ const CartoonMovies = () => {
             <div className="flex gap-10">
               <div>
                 <img
-                  src={`https://phimimg.com/${movie.poster_url}`}
+                  src={movie.poster_url}
                   alt={movie.name}
                   style={{ width: "150px" }}
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <p>Tình trạng: {movie.episode_current}</p>
-                <p>Chất lượng: {movie.quality}</p>
-                <p>Thời lượng: {movie.time}</p>
-                <p>Ngôn ngữ: {movie.lang}</p>
-                <p>
-                  Thể loại: {movie.category.map((cat) => cat.name).join(", ")}
-                </p>
-                <p>
-                  Quốc gia:{" "}
-                  {movie.country.map((country) => country.name).join(", ")}
-                </p>
+                <p>Tên gốc: {movie.origin_name}</p>
+                <p>Năm ra mắt: {movie.year}</p>
                 <p>Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}</p>
               </div>
             </div>
@@ -80,9 +75,9 @@ const CartoonMovies = () => {
         >
           &rarr;
         </button>
-      </div>
-    </div>
+      </div>{" "}
+      */
+    </>
   );
-};
-
-export default CartoonMovies;
+}
+export default NewMovies;
