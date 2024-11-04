@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTVShow, setCurrentPage } from "../../redux/slices/tvShowSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 const TVShows = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,12 @@ const TVShows = () => {
     dispatch(fetchTVShow(newPage));
   };
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading")
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (status === "failed") return <div>Error: {error}</div>;
 
   return (

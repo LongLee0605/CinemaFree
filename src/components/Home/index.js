@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchCartoon } from "../../redux/slices/cartoonSlice";
@@ -8,6 +8,8 @@ import { fetchSingle } from "../../redux/slices/singleSlice";
 import { fetchTVShow } from "../../redux/slices/tvShowSlice";
 import Carousel from "../Carousel";
 import CarouselNoHttp from "../CarouselNoHttp";
+import Loading from "../Loading";
+
 const Home = () => {
   const dispatch = useDispatch();
   const latestMovies = useSelector((state) => state.latestMovies.items);
@@ -15,13 +17,31 @@ const Home = () => {
   const phimBo = useSelector((state) => state.phimBo.items);
   const phimHoatHinh = useSelector((state) => state.hoatHinh.items);
   const tvShows = useSelector((state) => state.tvShows.items);
+
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    dispatch(fetchLatestMovies());
-    dispatch(fetchSingle());
-    dispatch(fetchSeries());
-    dispatch(fetchCartoon());
-    dispatch(fetchTVShow());
+    const fetchData = async () => {
+      await Promise.all([
+        dispatch(fetchLatestMovies()),
+        dispatch(fetchSingle()),
+        dispatch(fetchSeries()),
+        dispatch(fetchCartoon()),
+        dispatch(fetchTVShow()),
+      ]);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    };
+
+    fetchData();
   }, [dispatch]);
+
+  // Nếu đang tải, hiển thị animation
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <div className="w-[1240px] bg-black mx-auto">

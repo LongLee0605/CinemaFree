@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loading from "../Loading";
 
 const MovieDetails = () => {
   const { slug } = useParams();
@@ -29,7 +30,12 @@ const MovieDetails = () => {
     fetchMovieDetails();
   }, [slug]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
 
   const linkEmbeds = movieLink?.episodes?.[0]?.server_data || [];

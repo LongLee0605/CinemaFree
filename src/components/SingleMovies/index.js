@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchSingle, setCurrentPage } from "../../redux/slices/singleSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
+import Loading from "../Loading";
 
 const SingleMovies = () => {
   const dispatch = useDispatch();
@@ -24,8 +25,12 @@ const SingleMovies = () => {
     navigate(`?page=${newPage}`);
     dispatch(fetchSingle(newPage));
   };
-
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading")
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (status === "failed") return <div>Error: {error}</div>;
 
   return (

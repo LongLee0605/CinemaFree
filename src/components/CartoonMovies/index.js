@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCartoon, setCurrentPage } from "../../redux/slices/cartoonSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 const CartoonMovies = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,12 @@ const CartoonMovies = () => {
     dispatch(fetchCartoon(newPage));
   };
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading")
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (status === "failed") return <div>Error: {error}</div>;
 
   return (

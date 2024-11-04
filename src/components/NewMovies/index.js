@@ -6,7 +6,7 @@ import {
   setCurrentPage,
 } from "../../redux/slices/homeSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
-
+import Loading from "../Loading";
 
 function NewMovies({ currentPage }) {
   const dispatch = useDispatch();
@@ -27,7 +27,12 @@ function NewMovies({ currentPage }) {
     dispatch(fetchLatestMovies(newPage));
   };
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading")
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
 
   if (status === "failed") return <div>Error: {error}</div>;
   return (

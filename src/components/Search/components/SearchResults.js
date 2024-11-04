@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSearchResults } from "../../../redux/slices/searchSlice";
 import { formatDateTimeVN } from "../../../utils/dateUtils";
+import Loading from "../../Loading";
 
 const SearchResults = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,12 @@ const SearchResults = () => {
     }
   };
 
-  if (status === "loading" && currentPage === 1) return <div>Loading...</div>;
+  if (status === "loading" && currentPage === 1)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (status === "failed") return <div>Error: {error}</div>;
 
   return (
@@ -60,7 +66,13 @@ const SearchResults = () => {
       </ul>
       {totalPages - currentPage > 0 && (
         <button onClick={handleLoadMore} disabled={isFetchingMore}>
-          {isFetchingMore ? "Loading..." : "Load More"}
+          {isFetchingMore ? (
+            <div>
+              <Loading />
+            </div>
+          ) : (
+            "Load More"
+          )}
         </button>
       )}
     </div>

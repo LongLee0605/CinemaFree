@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSeries, setCurrentPage } from "../../redux/slices/seriesSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 const SeriesMovies = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,12 @@ const SeriesMovies = () => {
     dispatch(fetchSeries(newPage));
   };
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading")
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (status === "failed") return <div>Error: {error}</div>;
 
   return (
