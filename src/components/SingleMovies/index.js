@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchSingle, setCurrentPage } from "../../redux/slices/singleSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const SingleMovies = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const phimLe = useSelector((state) => state.phimLe.items);
   const status = useSelector((state) => state.phimLe.status);
   const error = useSelector((state) => state.phimLe.error);
@@ -20,6 +21,7 @@ const SingleMovies = () => {
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
+    navigate(`?page=${newPage}`);
     dispatch(fetchSingle(newPage));
   };
 
@@ -68,7 +70,7 @@ const SingleMovies = () => {
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
-          &larr;  
+          &larr;
         </button>
         <div>
           {currentPage} / {totalPages}

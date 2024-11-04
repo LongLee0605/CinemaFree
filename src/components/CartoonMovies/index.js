@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartoon, setCurrentPage } from "../../redux/slices/cartoonSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CartoonMovies = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const hoatHinh = useSelector((state) => state.hoatHinh.items);
   const status = useSelector((state) => state.hoatHinh.status);
   const error = useSelector((state) => state.hoatHinh.error);
@@ -19,6 +20,7 @@ const CartoonMovies = () => {
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
+    navigate(`?page=${newPage}`);
     dispatch(fetchCartoon(newPage));
   };
 

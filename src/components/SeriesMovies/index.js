@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSeries, setCurrentPage } from "../../redux/slices/seriesSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SeriesMovies = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const phimBo = useSelector((state) => state.phimBo.items);
   const status = useSelector((state) => state.phimBo.status);
   const error = useSelector((state) => state.phimBo.error);
@@ -19,6 +20,7 @@ const SeriesMovies = () => {
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
+    navigate(`?page=${newPage}`);
     dispatch(fetchSeries(newPage));
   };
 

@@ -1,4 +1,3 @@
-// components/Search/components/SearchResults.js
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSearchResults } from "../../../redux/slices/searchSlice";

@@ -13,8 +13,8 @@ const SearchInput = () => {
 
   const handleSearch = () => {
     if (keyword.trim()) {
-      dispatch(clearSearchResults()); // Clear previous results
-      dispatch(fetchSearchResults({ keyword })); // Fetch new results
+      dispatch(clearSearchResults()); 
+      dispatch(fetchSearchResults({ keyword }));
       navigate("/search");
     }
   };
@@ -22,7 +22,7 @@ const SearchInput = () => {
   const handleClear = () => {
     setKeyword("");
     dispatch(clearSearchResults());
-    navigate("/");
+    navigate("/phim-moi-cap-nhat");
   };
 
   return (

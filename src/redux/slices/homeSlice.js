@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Thunk để lấy dữ liệu phim mới nhất
 export const fetchLatestMovies = createAsyncThunk(
   "latestMovies/fetchLatestMovies",
   async (page = 1) => {

@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTVShow, setCurrentPage } from "../../redux/slices/tvShowSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TVShows = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const tvShows = useSelector((state) => state.tvShows.items);
   const status = useSelector((state) => state.tvShows.status);
   const error = useSelector((state) => state.tvShows.error);
@@ -19,6 +20,7 @@ const TVShows = () => {
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
+    navigate(`?page=${newPage}`);
     dispatch(fetchTVShow(newPage));
   };
 

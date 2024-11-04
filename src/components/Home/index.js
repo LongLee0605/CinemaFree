@@ -1,35 +1,36 @@
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  fetchLatestMovies,
-  setCurrentPage,
+    fetchLatestMovies,
+    setCurrentPage,
 } from "../../redux/slices/homeSlice";
-import { Link } from "react-router-dom";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 
-const Home = () => {
+const Home = ({ currentPage }) => { 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const latestMovies = useSelector((state) => state.latestMovies.items);
   const status = useSelector((state) => state.latestMovies.status);
   const error = useSelector((state) => state.latestMovies.error);
-  const currentPage = useSelector((state) => state.latestMovies.currentPage);
   const totalPages = useSelector((state) => state.latestMovies.totalPages);
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchLatestMovies(currentPage));
-    }
-  }, [status, dispatch, currentPage]);
+    dispatch(setCurrentPage(currentPage));
+    dispatch(fetchLatestMovies(currentPage));
+  }, [dispatch, currentPage]);
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
+    navigate(`?page=${newPage}`); 
     dispatch(fetchLatestMovies(newPage));
   };
 
   if (status === "loading") return <div>Loading...</div>;
 
   if (status === "failed") return <div>Error: {error}</div>;
-console.log(currentPage)
+
   return (
     <div>
       <h2>Latest Movies</h2>
