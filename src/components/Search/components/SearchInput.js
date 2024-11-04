@@ -1,4 +1,3 @@
-// components/Search/components/SearchInput.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -14,7 +13,8 @@ const SearchInput = () => {
 
   const handleSearch = () => {
     if (keyword.trim()) {
-      dispatch(fetchSearchResults({ keyword }));
+      dispatch(clearSearchResults()); // Clear previous results
+      dispatch(fetchSearchResults({ keyword })); // Fetch new results
       navigate("/search");
     }
   };
@@ -22,7 +22,7 @@ const SearchInput = () => {
   const handleClear = () => {
     setKeyword("");
     dispatch(clearSearchResults());
-    navigate("/")
+    navigate("/");
   };
 
   return (

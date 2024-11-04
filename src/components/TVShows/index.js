@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTVShow, setCurrentPage } from "../../redux/slices/tvShowSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
+import { Link } from "react-router-dom";
 
 const TVShows = () => {
   const dispatch = useDispatch();
@@ -30,9 +31,11 @@ const TVShows = () => {
       <ul>
         {tvShows.map((movie) => (
           <li key={movie._id} className="py-4">
-            <h3 className="py-2">
-              {movie.name} ({movie.year})
-            </h3>
+            <Link to={`/movie/${movie.slug}`}>
+              <h3 className="py-2">
+                {movie.name} ({movie.year})
+              </h3>
+            </Link>
             <div className="flex gap-10">
               <div>
                 <img

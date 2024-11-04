@@ -22,7 +22,7 @@ const searchSlice = createSlice({
   initialState: {
     results: [],
     status: "idle",
-    isFetchingMore: false, // Trạng thái khi đang load thêm
+    isFetchingMore: false,
     error: null,
     totalItems: 0,
     totalPages: 1,

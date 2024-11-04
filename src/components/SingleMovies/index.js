@@ -32,7 +32,7 @@ const SingleMovies = () => {
       <ul>
         {phimLe.map((movie) => (
           <li key={movie._id} className="py-4">
-            <Link to={`/movie/${movie.slug}`}> {/* Use Link to navigate to detail page */}
+            <Link to={`/movie/${movie.slug}`}>
               <h3 className="py-2">
                 {movie.name} ({movie.year})
               </h3>

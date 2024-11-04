@@ -32,7 +32,8 @@ const MovieDetails = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  const linkEmbed = movieLink?.episodes?.[0]?.server_data?.[0]?.link_embed;
+  const linkEmbeds = movieLink?.episodes?.[0]?.server_data || [];
+
   return (
     <div>
       {movieDetails && (
@@ -72,15 +73,26 @@ const MovieDetails = () => {
             <strong>Ngày cập nhật:</strong>{" "}
             {new Date(movieDetails.modified.time).toLocaleDateString()}
           </p>
-          {linkEmbed && (
-            <p>
-              <strong>Xem phim:</strong>{" "}
-              <button className="text-blue-500 underline cursor-pointer">
-                <a href={linkEmbed} target="_blank" rel="noopener noreferrer">
-                  Nhấn để xem phim
-                </a>
-              </button>
-            </p>
+          {linkEmbeds.length > 0 && (
+            <div>
+              <strong>Xem phim:</strong>
+              {linkEmbeds.map((server, index) => (
+                <button
+                  key={index}
+                  className="text-blue-500 underline cursor-pointer block mt-2"
+                >
+                  <a
+                    href={server.link_embed}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {linkEmbeds.length > 1
+                      ? `Nhấn để xem phim ${index + 1}`
+                      : "Nhấn để xem phim"}
+                  </a>
+                </button>
+              ))}
+            </div>
           )}
         </>
       )}

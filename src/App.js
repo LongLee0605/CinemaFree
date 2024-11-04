@@ -11,6 +11,7 @@ import SeriesMovies from "./components/SeriesMovies";
 import SingleMovies from "./components/SingleMovies";
 import TVShows from "./components/TVShows";
 import store from "./redux/store";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           <SearchInput />
           <nav>
             <ul className="flex gap-10">
+              <li>
+                <Link to="/">Phim mới cập nhật</Link>
+              </li>
               <li>
                 <Link to="/single-movies">Phim lẻ</Link>
               </li>
@@ -36,12 +40,13 @@ function App() {
           </nav>
 
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/single-movies" element={<SingleMovies />} />
-            <Route path="/movie/:slug" element={<MovieDetails />} />
             <Route path="/series-movies" element={<SeriesMovies />} />
             <Route path="/cartoon-movies" element={<CartoonMovies />} />
             <Route path="/tv-shows" element={<TVShows />} />
             <Route path="/search" element={<SearchResults />} />
+            <Route path="/movie/:slug" element={<MovieDetails />} />
           </Routes>
         </div>
       </Router>
