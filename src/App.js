@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import {
   Link,
@@ -23,7 +23,9 @@ const App = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const currentPage = parseInt(params.get("page")) || 1;
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <div className="App">
       <SearchInput />
