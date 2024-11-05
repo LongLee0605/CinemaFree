@@ -37,51 +37,66 @@ function NewMovies({ currentPage }) {
   if (status === "failed") return <div>Error: {error}</div>;
   return (
     <>
-      {" "}
-      <h2>Latest Movies</h2>
-      <ul>
-        {latestMovies.map((movie) => (
-          <li key={movie._id} className="py-4">
-            <Link to={`/movie/${movie.slug}`}>
-              <h3 className="py-2">
-                {movie.name} ({movie.year})
-              </h3>
-            </Link>
-            <div className="flex gap-10">
-              <div>
-                <img
-                  src={movie.poster_url}
-                  alt={movie.name}
-                  style={{ width: "150px" }}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p>Tên gốc: {movie.origin_name}</p>
-                <p>Năm ra mắt: {movie.year}</p>
-                <p>Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}</p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="flex justify-center gap-5 py-10">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          &larr;
-        </button>
-        <div>
-          {currentPage} / {totalPages}
+      <div className="container mx-0">
+        <h2 className="text-white text-2xl font-semibold">Phim Mới Cập Nhật</h2>
+        <div className="flex">
+          <div className="w-3/4 px-4">
+            <ul className="flex flex-wrap gap-5 justify-between">
+              {latestMovies.map((movie) => (
+                <li
+                  key={movie._id}
+                  className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-[46%]"
+                >
+                  <Link to={`/movie/${movie.slug}`}>
+                    <h3 className="py-2 text-white text-lg font-semibold">
+                      {movie.name} ({movie.year})
+                    </h3>
+                    <div className="flex gap-5">
+                      <div>
+                        <img
+                          src={movie.poster_url}
+                          alt={movie.name}
+                          style={{
+                            width: "150px",
+                            objectFit: "cover",
+                            height: "200px",
+                          }}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <p>Tên gốc: {movie.origin_name}</p>
+                        <p>Năm ra mắt: {movie.year}</p>
+                        <p>
+                          Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="w-1/4">SideBar</div>
         </div>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          &rarr;
-        </button>
-      </div>{" "}
-      */
+
+        <div className="flex justify-center gap-5 py-10">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            &larr;
+          </button>
+          <div>
+            {currentPage} / {totalPages}
+          </div>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            &rarr;
+          </button>
+        </div>
+      </div>
     </>
   );
 }

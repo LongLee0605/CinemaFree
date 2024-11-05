@@ -28,7 +28,7 @@ const Carousel = ({ items }) => {
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-80"></div>
-                  <div className="absolute bottom-4 left-2 text-lg text-white p-4">
+                  <div className="absolute bottom-4 left-6 text-lg text-white p-4">
                     <p className="font-semibold">{item.name}</p>
                     <p className="text-sm">{item.year}</p>
                   </div>

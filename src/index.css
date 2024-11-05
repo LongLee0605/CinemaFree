@@ -25,6 +25,12 @@ code {
 a{
   text-decoration: none;
 }
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  background-color: black;
+}
 .loading-overlay {
   position: fixed;
   top: 0;

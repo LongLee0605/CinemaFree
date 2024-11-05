@@ -44,7 +44,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-[1240px] bg-black mx-auto">
+      <div className="container">
         <div className="text-center py-4 border-[1px] border-[#fff9]">
           <p className="text-sm">
             Đây là trang web Cinema Free, chuyên Update phim mới
@@ -113,10 +113,6 @@ const Home = () => {
             </div>
             <div className="w-[30%]">SideBar</div>
           </div>
-        </div>
-        <div className="text-center border-t-[1px] border-[#fff6] py-5">
-          <p>Built and designed by Le Tran Dang Long</p>
-          <p>Copyright © 2024 All Rights Reserved</p>
         </div>
       </div>
     </>
