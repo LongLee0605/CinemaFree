@@ -63,7 +63,7 @@ const TVShows = () => {
                           }}
                         />
                       </div>
-                      <div>
+                      <div className="flex flex-col gap-2">
                         <p>Tình trạng: {movie.episode_current}</p>
                         <p>Chất lượng: {movie.quality}</p>
                         <p>Thời lượng: {movie.time}</p>

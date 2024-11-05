@@ -52,15 +52,19 @@ const MovieDetails = () => {
                   <h2 className="text-2xl font-bold mb-2">
                     {movieDetails.name}
                   </h2>
-                  <p>
-                    <strong>Tên gốc:</strong> {movieDetails.origin_name}
-                  </p>
-                  <p>
-                    <strong>Tình trạng:</strong> {movieDetails.episode_current}
-                  </p>
-                  <p>
-                    <strong>Thời lượng phim:</strong> {movieDetails.time}
-                  </p>
+                  <div className="flex flex-col gap-3">
+                    {" "}
+                    <p>
+                      <strong>Tên gốc:</strong> {movieDetails.origin_name}
+                    </p>
+                    <p>
+                      <strong>Tình trạng:</strong>{" "}
+                      {movieDetails.episode_current}
+                    </p>
+                    <p>
+                      <strong>Thời lượng phim:</strong> {movieDetails.time}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="mt-8">
