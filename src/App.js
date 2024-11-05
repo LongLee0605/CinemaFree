@@ -33,7 +33,7 @@ const App = () => {
       <header className="bg-black text-white shadow-md">
         <div className="container px-4 py-4 flex justify-between items-center">
           <div className="text-2xl font-bold">
-            <Link to="/">Cenema Free</Link>
+            <Link to="/">Cinema Free</Link>
           </div>
           <nav className="hidden md:flex gap-8">
             <Link to="/phim-moi-cap-nhat" className="hover:text-yellow-400">
