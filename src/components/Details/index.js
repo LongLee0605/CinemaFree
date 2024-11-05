@@ -53,7 +53,13 @@ const MovieDetails = () => {
                     {movieDetails.name}
                   </h2>
                   <p>
-                    <strong>Origin Name:</strong> {movieDetails.origin_name}
+                    <strong>Tên gốc:</strong> {movieDetails.origin_name}
+                  </p>
+                  <p>
+                    <strong>Tình trạng:</strong> {movieDetails.episode_current}
+                  </p>
+                  <p>
+                    <strong>Thời lượng phim:</strong> {movieDetails.time}
                   </p>
                 </div>
               </div>
@@ -109,9 +115,6 @@ const MovieDetails = () => {
                       <p>
                         <strong>Diễn viên:</strong>{" "}
                         {movieDetails.actor.join(", ")}
-                      </p>
-                      <p>
-                        <strong>Thời gian:</strong> {movieDetails.time}
                       </p>
                       <p>
                         <strong>Đạo diễn:</strong>{" "}
