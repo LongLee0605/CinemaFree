@@ -53,7 +53,7 @@ const SingleMovies = () => {
                     </h3>
 
                     <div className="flex gap-10">
-                      <div>
+                      <div className="flex items-center w-2/5">
                         <img
                           src={`https://phimimg.com/${movie.poster_url}`}
                           alt={movie.name}
@@ -61,10 +61,11 @@ const SingleMovies = () => {
                             width: "150px",
                             height: "200px",
                             objectFit: "cover",
+                            borderRadius: "8px",
                           }}
                         />
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2 w-3/5">
                         <p>Tình trạng: {movie.episode_current}</p>
                         <p>Chất lượng: {movie.quality}</p>
                         <p>Thời lượng: {movie.time}</p>

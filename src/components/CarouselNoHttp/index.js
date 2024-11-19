@@ -36,7 +36,7 @@ const CarouselNoHttp = ({ items }) => {
             <Link to={`/movie/${item.slug}`}>
               <div className=" w-full shadow-md ">
                 <div>
-                  <div className="relative">
+                  <div className="relative pb-2">
                     <img
                       src={`https://phimimg.com/${item.poster_url}`}
                       alt={item.name}

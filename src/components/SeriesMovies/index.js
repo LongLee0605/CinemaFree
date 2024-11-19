@@ -62,6 +62,7 @@ const SeriesMovies = () => {
                             width: "150px",
                             height: "200px",
                             objectFit: "cover",
+                            borderRadius: "8px",
                           }}
                         />
                       </div>

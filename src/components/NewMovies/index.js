@@ -52,7 +52,7 @@ function NewMovies({ currentPage }) {
                       {movie.name} ({movie.year})
                     </h3>
                     <div className="flex gap-5">
-                      <div>
+                      <div className="flex items-center w-2/5">
                         <img
                           src={movie.poster_url}
                           alt={movie.name}
@@ -60,10 +60,11 @@ function NewMovies({ currentPage }) {
                             width: "150px",
                             objectFit: "cover",
                             height: "200px",
+                            borderRadius: "8px",
                           }}
                         />
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2 w-3/5">
                         <p>Tên gốc: {movie.origin_name}</p>
                         <p>Năm ra mắt: {movie.year}</p>
                         <p>

@@ -46,7 +46,7 @@ const MovieDetails = () => {
                 <img
                   src={movieDetails.poster_url}
                   alt={movieDetails.name}
-                  className="h-auto w-60 mb-4"
+                  className="h-auto w-60 mb-4 rounded-lg"
                 />
                 <div>
                   <h2 className="text-2xl font-bold mb-2">
