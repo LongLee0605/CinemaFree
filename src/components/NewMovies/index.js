@@ -5,12 +5,20 @@ import {
   fetchLatestMovies,
   setCurrentPage,
 } from "../../redux/slices/homeSlice";
+import { fetchSingle } from "../../redux/slices/singleSlice";
+import { fetchSeries } from "../../redux/slices/seriesSlice";
+import { fetchTVShow } from "../../redux/slices/tvShowSlice";
+import { fetchCartoon } from "../../redux/slices/cartoonSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 import Loading from "../Loading";
 
 function NewMovies({ currentPage }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const phimLe = useSelector((state) => state.phimLe.items);
+  const phimBo = useSelector((state) => state.phimBo.items);
+  const tvShows = useSelector((state) => state.tvShows.items);
+  const hoatHinh = useSelector((state) => state.hoatHinh.items);
   const latestMovies = useSelector((state) => state.latestMovies.items);
   const status = useSelector((state) => state.latestMovies.status);
   const error = useSelector((state) => state.latestMovies.error);
@@ -19,12 +27,40 @@ function NewMovies({ currentPage }) {
   useEffect(() => {
     dispatch(setCurrentPage(currentPage));
     dispatch(fetchLatestMovies(currentPage));
+    dispatch(fetchSingle(currentPage));
+    dispatch(fetchSeries(currentPage));
+    dispatch(fetchTVShow(currentPage));
+    dispatch(fetchCartoon(currentPage));
   }, [dispatch, currentPage]);
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
     navigate(`?page=${newPage}`);
     dispatch(fetchLatestMovies(newPage));
+    dispatch(fetchSingle(newPage));
+    dispatch(fetchSeries(newPage));
+    dispatch(fetchTVShow(newPage));
+    dispatch(fetchCartoon(newPage));
+  };
+
+  const getEpisodeStatus = (movieId) => {
+    let matchedMovie =
+      phimLe.find((item) => item._id === movieId) ||
+      phimBo.find((item) => item._id === movieId) ||
+      tvShows.find((item) => item._id === movieId) ||
+      hoatHinh.find((item) => item._id === movieId);
+
+    return matchedMovie ? matchedMovie.episode_current : "N/A";
+  };
+
+  const getUpdateTime = (movieId) => {
+    let matchedMovie =
+      phimLe.find((item) => item._id === movieId) ||
+      phimBo.find((item) => item._id === movieId) ||
+      tvShows.find((item) => item._id === movieId) ||
+      hoatHinh.find((item) => item._id === movieId);
+
+    return matchedMovie ? matchedMovie?.time : "Không rõ";
   };
 
   if (status === "loading")
@@ -35,6 +71,7 @@ function NewMovies({ currentPage }) {
     );
 
   if (status === "failed") return <div>Error: {error}</div>;
+
   return (
     <>
       <div className="container mx-0">
@@ -68,8 +105,11 @@ function NewMovies({ currentPage }) {
                         <p>Tên gốc: {movie.origin_name}</p>
                         <p>Năm ra mắt: {movie.year}</p>
                         <p>
-                          Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}
+                          Ngày cập nhật:{" "}
+                          {formatDateTimeVN(movie.modified?.time)}
                         </p>
+                        <p>Tình trạng: {getEpisodeStatus(movie._id)}</p>
+                        <p>Thời lượng: {getUpdateTime(movie._id)}</p>
                       </div>
                     </div>
                   </Link>
@@ -101,4 +141,5 @@ function NewMovies({ currentPage }) {
     </>
   );
 }
+
 export default NewMovies;
