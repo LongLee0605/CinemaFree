@@ -28,7 +28,7 @@ const Carousel = ({ items }) => {
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-80"></div>
-                  <div className="absolute bottom-4 left-0 text-lg text-white p-4">
+                  <div className="absolute bottom-4 left-0 text-lg text-white p-4 w-full">
                     <p className="font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-white">
                       {item.name}
                     </p>
