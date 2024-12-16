@@ -33,7 +33,7 @@ const SearchResults = () => {
   return (
     <>
       <div className="container mx-0">
-        <h2 className="text-white text-2xl font-semibold">Phim Mới Cập Nhật</h2>
+        <h2 className="text-white text-2xl font-semibold">Kết quả tìm kiếm</h2>
         <div className="flex">
           <div className="w-3/4 px-4">
             <ul className="flex flex-wrap gap-5 justify-between">
