@@ -65,8 +65,10 @@ const Carousel = ({ itemsCarousel }) => {
         {Array.from({ length: getTotalDots() }).map((_, index) => (
           <span
             key={index}
-            className={`cursor-pointer w-3 h-3 rounded-full transition-all duration-300 ${
-              currentIndex === index ? "bg-gray-300 w-12 h-3" : "bg-gray-600"
+            className={`cursor-pointer rounded-full transition-all duration-300 ${
+              currentIndex === index
+                ? "bg-gray-300 w-12 h-3"
+                : "bg-gray-600 w-3 h-3"
             }`}
             onClick={() => handleDotClick(index)}
           />
