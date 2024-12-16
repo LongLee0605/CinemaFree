@@ -52,7 +52,7 @@ const Home = () => {
         </div>
         <div>
           <div className="flex gap-5">
-            <div className="w-[70%] px-4">
+            <div className="w-full lg:w-[70%] px-4">
               <div>
                 <Carousel items={latestMovies} />
               </div>
@@ -111,7 +111,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[30%]">SideBar</div>
+            <div className="w-[30%] lg:block hidden">SideBar</div>
           </div>
         </div>
       </div>

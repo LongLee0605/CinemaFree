@@ -40,16 +40,16 @@ const MovieDetails = () => {
   const linkEmbeds = movieLink?.episodes?.[0]?.server_data || [];
 
   return (
-    <div className="w-[1240px] mx-auto bg-black text-white">
+    <div className="w-full lg:w-[1240px] mx-auto bg-black text-white">
       {movieDetails && (
         <>
           <div className="flex">
             {/* Chi tiết phim */}
-            <div className="w-3/4 p-4 border-[1px] border-[#fff4]">
-              <div className="flex gap-6 mb-4">
+            <div className="w-full lg:w-3/4 p-4 border-[1px] border-[#fff4]">
+              <div className="flex gap-6 mb-4 justify-center">
                 {selectedEpisode ? (
                   <iframe
-                    width="100%"
+                    width="96%"
                     height="500px"
                     src={selectedEpisode}
                     title="Video"
@@ -59,26 +59,29 @@ const MovieDetails = () => {
                   ></iframe>
                 ) : (
                   <>
-                    <img
-                      src={movieDetails.poster_url}
-                      alt={movieDetails.name}
-                      className="h-auto w-60 mb-4 rounded-lg"
-                    />
-                    <div>
-                      <h2 className="text-2xl font-bold mb-2">
-                        {movieDetails.name}
-                      </h2>
-                      <div className="flex flex-col gap-3">
-                        <p>
-                          <strong>Tên gốc:</strong> {movieDetails.origin_name}
-                        </p>
-                        <p>
-                          <strong>Tình trạng:</strong>{" "}
-                          {movieDetails.episode_current}
-                        </p>
-                        <p>
-                          <strong>Thời lượng phim:</strong> {movieDetails.time}
-                        </p>
+                    <div className="block lg:flex gap-10">
+                      <img
+                        src={movieDetails.poster_url}
+                        alt={movieDetails.name}
+                        className="h-auto w-full lg:w-60 mb-4 rounded-lg"
+                      />
+                      <div >
+                        <h2 className="text-2xl font-bold mb-2">
+                          {movieDetails.name}
+                        </h2>
+                        <div className="flex flex-col gap-3 lg:pl-0 pl-3">
+                          <p>
+                            <strong>Tên gốc:</strong> {movieDetails.origin_name}
+                          </p>
+                          <p>
+                            <strong>Tình trạng:</strong>{" "}
+                            {movieDetails.episode_current}
+                          </p>
+                          <p>
+                            <strong>Thời lượng phim:</strong>{" "}
+                            {movieDetails.time}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </>
@@ -106,7 +109,7 @@ const MovieDetails = () => {
                   {activeTab === 0 && (
                     <div>
                       {linkEmbeds.length > 0 ? (
-                        <div className="flex gap-5 flex-wrap">
+                        <div className="flex gap-5 flex-wrap justify-center">
                           {linkEmbeds.map((server, index) => (
                             <button
                               key={index}
@@ -166,7 +169,7 @@ const MovieDetails = () => {
             </div>
 
             {/* Sidebar */}
-            <div className="w-1/4 p-4">
+            <div className="w-1/4 hidden lg:block p-4">
               <p>Sidebar</p>
             </div>
           </div>
