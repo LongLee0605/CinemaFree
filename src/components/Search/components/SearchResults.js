@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchSearchResults } from "../../../redux/slices/searchSlice";
 import { formatDateTimeVN } from "../../../utils/dateUtils";
 import Loading from "../../Loading";
-
+import { Link } from "react-router-dom";
 const SearchResults = () => {
   const dispatch = useDispatch();
   const searchResults = useSelector((state) => state.search.results);
@@ -42,6 +42,7 @@ const SearchResults = () => {
                   key={movie._id}
                   className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-[46%]"
                 >
+                  <Link to={`/movie/${movie.slug}`}>
                   <h3 className="py-2">
                     {movie.name} ({movie.year})
                   </h3>
@@ -78,6 +79,7 @@ const SearchResults = () => {
                       </p>
                     </div>
                   </div>
+                  </Link>
                 </li>
               ))}
             </ul>{" "}
