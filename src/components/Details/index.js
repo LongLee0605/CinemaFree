@@ -46,7 +46,7 @@ const MovieDetails = () => {
           <div className="flex">
             {/* Chi tiết phim */}
             <div className="w-full lg:w-3/4 p-4 border-[1px] border-[#fff4]">
-              <div className="flex gap-6 mb-4 justify-center">
+              <div className="flex gap-6 mb-4 justify-center lg:justify-start">
                 {selectedEpisode ? (
                   <iframe
                     width="96%"
@@ -65,7 +65,7 @@ const MovieDetails = () => {
                         alt={movieDetails.name}
                         className="h-auto w-full lg:w-60 mb-4 rounded-lg"
                       />
-                      <div >
+                      <div>
                         <h2 className="text-2xl font-bold mb-2">
                           {movieDetails.name}
                         </h2>

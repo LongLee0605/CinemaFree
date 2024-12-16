@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Provider } from "react-redux";
 import {
   Link,
@@ -7,6 +7,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 import CartoonMovies from "./components/CartoonMovies";
 import MovieDetails from "./components/Details";
@@ -20,6 +21,7 @@ import TVShows from "./components/TVShows";
 import store from "./redux/store";
 
 const App = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const currentPage = parseInt(params.get("page")) || 1;
@@ -28,14 +30,16 @@ const App = () => {
     window.scrollTo(0, 0);
   }, [location]);
 
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
   return (
     <div className="App">
       <header className="bg-black text-white shadow-md">
         <div className="container px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold z-20">
             <Link to="/">Cinema Free</Link>
           </div>
-          <nav className="hidden md:flex gap-8">
+          <nav className="hidden lg:flex gap-8">
             <Link to="/phim-moi-cap-nhat" className="hover:text-yellow-400">
               Phim mới cập nhật
             </Link>
@@ -52,11 +56,70 @@ const App = () => {
               TV Shows
             </Link>
           </nav>
-          <div className="flex items-center gap-4">
+          <div className=" items-center gap-4 hidden lg:flex">
             <SearchInput />
+          </div>
+          {/* Icon for mobile */}
+          <div className="lg:hidden z-20">
+            <button onClick={toggleDropdown} className="text-white">
+              {isDropdownOpen ? <FaTimes /> : <FaBars />}
+            </button>
           </div>
         </div>
       </header>
+
+      {isDropdownOpen && (
+        <div
+          className="fixed inset-0 bg-slate-950 bg-opacity-50 z-10"
+          onClick={toggleDropdown}
+        >
+          <div
+            className="absolute top-16 right-0 w-full bg-black text-white shadow-lg transition-transform duration-500 transform ease-in-out"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col items-start gap-6 p-4 pb-6 border-[1px]">
+              <Link
+                to="/phim-moi-cap-nhat"
+                className="hover:text-yellow-400"
+                onClick={toggleDropdown}
+              >
+                Phim mới cập nhật
+              </Link>
+              <Link
+                to="/phim-le"
+                className="hover:text-yellow-400"
+                onClick={toggleDropdown}
+              >
+                Phim lẻ
+              </Link>
+              <Link
+                to="/phim-bo"
+                className="hover:text-yellow-400"
+                onClick={toggleDropdown}
+              >
+                Phim bộ
+              </Link>
+              <Link
+                to="/phim-hoat-hinh"
+                className="hover:text-yellow-400"
+                onClick={toggleDropdown}
+              >
+                Phim hoạt hình
+              </Link>
+              <Link
+                to="/tv-shows"
+                className="hover:text-yellow-400"
+                onClick={toggleDropdown}
+              >
+                TV Shows
+              </Link>
+              <div className="flex items-center gap-4">
+                <SearchInput />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="mx-auto">
         <Routes>
