@@ -16,11 +16,11 @@ const Carousel = ({ itemsCarousel }) => {
 
   const getTotalDots = () => {
     if (screenWidth >= 1024) {
-      return Math.min(itemsCarousel.length, 8);
+      return Math.min(itemsCarousel.length, 7);
     } else if (screenWidth >= 768) {
-      return Math.min(itemsCarousel.length, 9);
+      return Math.min(itemsCarousel.length, 8);
     } else {
-      return Math.min(itemsCarousel.length, 10);
+      return Math.min(itemsCarousel.length, 9);
     }
   };
 
@@ -60,7 +60,9 @@ const Carousel = ({ itemsCarousel }) => {
           <span
             key={index}
             className={`cursor-pointer rounded-full transition-all duration-300 ${
-              currentIndex === index ? "bg-gray-300 w-12 h-3" : "bg-gray-600 w-3 h-3"
+              currentIndex === index
+                ? "bg-gray-300 w-12 h-3"
+                : "bg-gray-600 w-3 h-3"
             }`}
             onClick={() => handleDotClick(index)}
           />

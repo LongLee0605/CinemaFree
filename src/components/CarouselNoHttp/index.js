@@ -18,11 +18,11 @@ const Carousel = ({ itemsCarousel }) => {
   const getTotalDots = () => {
     // Số lượng dots tùy thuộc vào kích thước màn hình và tổng số items
     if (screenWidth >= 1024) {
-      return Math.min(itemsCarousel.length, 8);
+      return Math.min(itemsCarousel.length, 7);
     } else if (screenWidth >= 768) {
-      return Math.min(itemsCarousel.length, 9);
+      return Math.min(itemsCarousel.length, 8);
     } else {
-      return Math.min(itemsCarousel.length, 10);
+      return Math.min(itemsCarousel.length, 9);
     }
   };
 
