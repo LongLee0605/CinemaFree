@@ -1,53 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Carousel = ({ items }) => {
+const Carousel = ({ itemsCarousel }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-  const totalItems = items.length;
-  const totalDots = Math.ceil(totalItems / 3.5);
+  const handleDotClick = (index) => {
+    setCurrentIndex(index);
+  };
+
+  const getVisibleItems = () => {
+    const itemsPerSlide = screenWidth >= 1024 ? 3 : screenWidth >= 768 ? 2 : 1;
+    return itemsCarousel.slice(currentIndex, currentIndex + itemsPerSlide);
+  };
+
+  const getTotalDots = () => {
+    if (screenWidth >= 1024) {
+      return Math.min(itemsCarousel.length, 8);
+    } else if (screenWidth >= 768) {
+      return Math.min(itemsCarousel.length, 9);
+    } else {
+      return Math.min(itemsCarousel.length, 10);
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <div
-        className="flex transition-transform duration-300 gap-8 pb-6"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-      >
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="w-[30%] pt-4 flex-shrink-0 flex justify-center "
-          >
-            <Link to={`/movie/${item.slug}`} style={{ width: "100%" }}>
-              <div className="shadow-md relative">
-                <div className="flex justify-center">
-                  <img
-                    src={item.poster_url}
-                    alt={item.name}
-                    className="object-top h-96 object-cover w-full"
-                  />
-
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-80"></div>
-                  <div className="absolute bottom-4 left-0 text-lg text-white p-4 w-full">
-                    <p className="font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-white">
-                      {item.name}
-                    </p>
-                    <p className="text-sm">{item.year}</p>
-                  </div>
+    <div className="relative w-full">
+      <div className="flex overflow-hidden py-8">
+        {getVisibleItems().map((item, index) => (
+          <div className="flex-none w-full md:w-1/2 lg:w-1/3 p-4" key={index}>
+            <Link to={`/movie/${item.slug}`}>
+              <div className="relative">
+                <div className="relative">
+                  <img src={item.poster_url} alt={item.name} />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-90"></div>
+                </div>
+                <div className="absolute bottom-0 left-0 text-gray-200 p-2">
+                  <p className="font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-white w-56">
+                    {item.name}
+                  </p>
+                  <p>{item.year}</p>
                 </div>
               </div>
             </Link>
           </div>
         ))}
       </div>
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {Array.from({ length: totalDots }).map((_, index) => (
-          <div
+      <div className="absolute bottom-0 left-0 w-full flex justify-center space-x-2 py-2">
+        {Array.from({ length: getTotalDots() }).map((_, index) => (
+          <span
             key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`h-2 ${index === currentIndex ? "w-8" : "w-2"} rounded ${
-              index === currentIndex ? "bg-white" : "bg-gray-400"
-            } cursor-pointer transition-all duration-300`}
+            className={`cursor-pointer w-3 h-3 rounded-full transition-all duration-300 ${
+              currentIndex === index ? "bg-gray-300 w-12 h-3" : "bg-gray-600"
+            }`}
+            onClick={() => handleDotClick(index)}
           />
         ))}
       </div>

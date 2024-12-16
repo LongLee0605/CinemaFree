@@ -35,50 +35,50 @@ const SearchResults = () => {
       <div className="container mx-0">
         <h2 className="text-white text-2xl font-semibold">Kết quả tìm kiếm</h2>
         <div className="flex">
-          <div className="w-3/4 px-4">
+          <div className="w-full lg:w-3/4 px-4">
             <ul className="flex flex-wrap gap-5 justify-between">
               {searchResults.map((movie) => (
                 <li
                   key={movie._id}
-                  className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-[46%]"
+                  className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
                 >
                   <Link to={`/movie/${movie.slug}`}>
-                  <h3 className="py-2">
-                    {movie.name} ({movie.year})
-                  </h3>
-                  <div className="flex gap-10">
-                    <div className="flex items-center w-2/5">
-                      <img
-                        src={`https://phimimg.com/${movie.poster_url}`}
-                        alt={movie.name}
-                        style={{
-                          width: "150px",
-                          height: "200px",
-                          objectFit: "cover",
-                          borderRadius: "8px",
-                        }}
-                      />
+                    <h3 className="py-2">
+                      {movie.name} ({movie.year})
+                    </h3>
+                    <div className="flex gap-5">
+                      <div className="flex items-center w-2/5">
+                        <img
+                          src={`https://phimimg.com/${movie.poster_url}`}
+                          alt={movie.name}
+                          style={{
+                            width: "150px",
+                            height: "200px",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2 w-3/5">
+                        <p>Tình trạng: {movie.episode_current}</p>
+                        <p>Chất lượng: {movie.quality}</p>
+                        <p>Thời lượng: {movie.time}</p>
+                        <p>Ngôn ngữ: {movie.lang}</p>
+                        <p>
+                          Thể loại:{" "}
+                          {movie.category.map((cat) => cat.name).join(", ")}
+                        </p>
+                        <p>
+                          Quốc gia:{" "}
+                          {movie.country
+                            .map((country) => country.name)
+                            .join(", ")}
+                        </p>
+                        <p>
+                          Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-2 w-3/5">
-                      <p>Tình trạng: {movie.episode_current}</p>
-                      <p>Chất lượng: {movie.quality}</p>
-                      <p>Thời lượng: {movie.time}</p>
-                      <p>Ngôn ngữ: {movie.lang}</p>
-                      <p>
-                        Thể loại:{" "}
-                        {movie.category.map((cat) => cat.name).join(", ")}
-                      </p>
-                      <p>
-                        Quốc gia:{" "}
-                        {movie.country
-                          .map((country) => country.name)
-                          .join(", ")}
-                      </p>
-                      <p>
-                        Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}
-                      </p>
-                    </div>
-                  </div>
                   </Link>
                 </li>
               ))}
@@ -101,7 +101,7 @@ const SearchResults = () => {
               </div>
             )}
           </div>
-          <div className="w-1/4"></div>
+          <div className="w-1/4 hidden lg:block"></div>
         </div>
       </div>
     </>

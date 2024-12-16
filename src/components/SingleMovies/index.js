@@ -40,19 +40,19 @@ const SingleMovies = () => {
           Phim Lẻ Mới Cập Nhật
         </h2>
         <div className="flex">
-          <div className="w-3/4 px-4">
+          <div className="w-full lg:w-3/4 px-4">
             <ul className="flex flex-wrap gap-5 justify-between">
               {phimLe.map((movie) => (
                 <li
-                  key={movie._id}
-                  className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-[46%]"
-                >
+                key={movie._id}
+                className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
+              >
                   <Link to={`/movie/${movie.slug}`}>
                     <h3 className="py-2">
                       {movie.name} ({movie.year})
                     </h3>
 
-                    <div className="flex gap-10">
+                    <div className="flex gap-5">
                       <div className="flex items-center w-2/5">
                         <img
                           src={`https://phimimg.com/${movie.poster_url}`}
@@ -90,7 +90,7 @@ const SingleMovies = () => {
               ))}
             </ul>
           </div>
-          <div className="w-1/4">SideBar</div>
+          <div className="w-1/4 hidden lg:block">SideBar</div>
         </div>
         <div className="flex justify-center gap-5 py-10">
           <button

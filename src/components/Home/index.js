@@ -54,60 +54,60 @@ const Home = () => {
           <div className="flex gap-5">
             <div className="w-full lg:w-[70%] px-4">
               <div>
-                <Carousel items={latestMovies} />
+                <Carousel itemsCarousel={latestMovies} />
               </div>
               <div className="py-5 border-b-[1px] border-[#fff6]">
-                <div className="flex justify-between pr-4">
-                  <h2 className="text-2xl font-semibold text-white">
-                    Phim Lẻ Mới Cập Nhật
+                <div className="flex justify-between pr-4 items-center">
+                  <h2 className="text-lg lg:text-2xl font-semibold text-white">
+                    Phim Lẻ Mới
                   </h2>
                   <Link to="/phim-le">
-                    <p>Xem thêm</p>
+                    <p className="text-sm lg:text-base">Xem thêm</p>
                   </Link>
                 </div>
                 <div>
-                  <CarouselNoHttp items={phimLe} />
+                  <CarouselNoHttp itemsCarousel={phimLe} />
                 </div>
               </div>
               <div className="py-5 border-b-[1px] border-[#fff6]">
-                <div className="flex justify-between pr-4">
-                  <h2 className="text-2xl font-semibold text-white">
-                    Phim Bộ Mới Cập Nhật
+                <div className="flex justify-between pr-4 items-center">
+                  <h2 className="text-lg lg:text-2xl font-semibold text-white">
+                    Phim Bộ Mới
                   </h2>
                   <Link to="/phim-bo">
-                    <p>Xem thêm</p>
+                    <p className="text-sm lg:text-base">Xem thêm</p>
                   </Link>
                 </div>
                 <div>
-                  <CarouselNoHttp items={phimBo} />
+                  <CarouselNoHttp itemsCarousel={phimBo} />
                 </div>
               </div>
               <div className="py-5 border-b-[1px] border-[#fff6]">
-                <div className="flex justify-between pr-4">
-                  <h2 className="text-2xl font-semibold text-white">
-                    Phim Hoạt Hình Mới Cập Nhật
+                <div className="flex justify-between pr-4 items-center">
+                  <h2 className="text-lg lg:text-2xl font-semibold text-white">
+                    Phim Hoạt Hình Mới
                   </h2>
                   <Link to="/phim-hoat-hinh">
-                    <p>Xem thêm</p>
+                    <p className="text-sm lg:text-base">Xem thêm</p>
                   </Link>
                 </div>
                 <div>
-                  <CarouselNoHttp items={phimHoatHinh} />
+                  <CarouselNoHttp itemsCarousel={phimHoatHinh} />
                 </div>
               </div>
               <div className="py-5">
                 <div>
-                  <div className="flex justify-between pr-4">
-                    <h2 className="text-2xl font-semibold text-white">
-                      TV Show Mới Cập Nhật
+                  <div className="flex justify-between pr-4 items-center">
+                    <h2 className="text-lg lg:text-2xl font-semibold text-white">
+                      TV Show Mới
                     </h2>
                     <Link to="/tv-shows">
-                      <p>Xem thêm</p>
+                      <p className="text-sm lg:text-base">Xem thêm</p>
                     </Link>
                   </div>
                 </div>
                 <div>
-                  <CarouselNoHttp items={tvShows} />
+                  <CarouselNoHttp itemsCarousel={tvShows} />
                 </div>
               </div>
             </div>
