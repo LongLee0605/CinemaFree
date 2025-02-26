@@ -49,7 +49,7 @@ const MovieDetails = () => {
               <div className="flex gap-6 mb-4 justify-center lg:justify-start">
                 {selectedEpisode ? (
                   <iframe
-                    width="96%"
+                    width="100%"
                     height="500px"
                     src={selectedEpisode}
                     title="Video"
