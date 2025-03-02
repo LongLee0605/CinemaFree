@@ -57,7 +57,7 @@ const MovieDetails = () => {
                     <iframe
                       width="100%"
                       height="350px"
-                      className="lg:h-[500px]"
+                      className="w-[95%] mx-auto lg:w-full lg:h-[500px]"
                       src={selectedEpisode}
                       title={`${movieDetails.name} ${
                         linkEmbeds.length > 1
