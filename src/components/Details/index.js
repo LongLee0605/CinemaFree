@@ -133,7 +133,7 @@ const MovieDetails = () => {
                               }}
                               className={`border-[1px] rounded-lg p-2 w-24 text-center hover:bg-gray-200 hover:text-gray-800 ${
                                 activeEpisodeIndex === index
-                                  ? "bg-blue-500 text-white"
+                                  ? "bg-gray-200 text-gray-800"
                                   : "border-gray-300"
                               }`}
                             >
