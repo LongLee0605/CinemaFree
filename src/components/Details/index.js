@@ -10,6 +10,7 @@ const MovieDetails = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
+  const [activeEpisodeIndex, setActiveEpisodeIndex] = useState(null);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -43,20 +44,35 @@ const MovieDetails = () => {
     <div className="w-full lg:w-[1240px] mx-auto bg-black text-white">
       {movieDetails && (
         <>
-          <div className="flex">
-            {/* Chi tiết phim */}
+          <div className="flex flex-col lg:flex-row">
             <div className="w-full lg:w-3/4 p-4 border-[1px] border-[#fff4]">
               <div className="flex gap-6 mb-4 justify-center lg:justify-start">
                 {selectedEpisode ? (
-                  <iframe
-                    width="100%"
-                    height="500px"
-                    src={selectedEpisode}
-                    title="Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  <div className="w-full">
+                    <h3 className="text-xl font-bold mb-2">
+                      {movieDetails.name}{" "}
+                      {linkEmbeds.length > 1 &&
+                        `- Tập ${activeEpisodeIndex + 1}`}
+                    </h3>
+                    <iframe
+                      width="100%"
+                      height="350px"
+                      className="lg:h-[500px]"
+                      src={selectedEpisode}
+                      title={`${movieDetails.name} ${
+                        linkEmbeds.length > 1
+                          ? `- Tập ${activeEpisodeIndex + 1}`
+                          : ""
+                      }`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin allow-popups"
+                      referrerpolicy="no-referrer-when-downgrade"
+                      importance="high"
+                    ></iframe>
+                  </div>
                 ) : (
                   <>
                     <div className="block lg:flex gap-10">
@@ -88,7 +104,6 @@ const MovieDetails = () => {
                 )}
               </div>
 
-              {/* Tabs chuyển đổi */}
               <div className="mt-8">
                 <div className="flex border-b border-gray-300 mb-4">
                   {["Xem Phim", "Nội Dung", "Thông Tin"].map((title, index) => (
@@ -104,7 +119,6 @@ const MovieDetails = () => {
                   ))}
                 </div>
 
-                {/* Nội dung tab */}
                 <div className="p-4 shadow-md rounded-b">
                   {activeTab === 0 && (
                     <div>
@@ -113,10 +127,15 @@ const MovieDetails = () => {
                           {linkEmbeds.map((server, index) => (
                             <button
                               key={index}
-                              onClick={() =>
-                                setSelectedEpisode(server.link_embed)
-                              } // Lưu link tập phim
-                              className="border-[1px] border-gray-300 rounded-lg p-2 w-24 text-center hover:bg-gray-200 hover:text-gray-800"
+                              onClick={() => {
+                                setSelectedEpisode(server.link_embed);
+                                setActiveEpisodeIndex(index);
+                              }}
+                              className={`border-[1px] rounded-lg p-2 w-24 text-center hover:bg-gray-200 hover:text-gray-800 ${
+                                activeEpisodeIndex === index
+                                  ? "bg-blue-500 text-white"
+                                  : "border-gray-300"
+                              }`}
                             >
                               {linkEmbeds.length > 1
                                 ? `Tập ${index + 1}`
@@ -168,8 +187,7 @@ const MovieDetails = () => {
               </div>
             </div>
 
-            {/* Sidebar */}
-            <div className="w-1/4 hidden lg:block p-4">
+            <div className="w-full lg:w-1/4 p-4">
               <p>Sidebar</p>
             </div>
           </div>
