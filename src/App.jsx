@@ -9,15 +9,15 @@ import {
 } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-import CartoonMovies from "./components/CartoonMovies";
-import MovieDetails from "./components/Details";
-import Home from "./components/Home";
-import NewMovies from "./components/NewMovies";
-import SearchInput from "./components/Search/components/SearchInput";
-import SearchResults from "./components/Search/components/SearchResults";
-import SeriesMovies from "./components/SeriesMovies";
-import SingleMovies from "./components/SingleMovies";
-import TVShows from "./components/TVShows";
+import CartoonMovies from "./components/CartoonMovies/index.jsx";
+import MovieDetails from "./components/Details/index.jsx";
+import Home from "./components/Home/index.jsx";
+import NewMovies from "./components/NewMovies/index.jsx";
+import SearchInput from "./components/Search/components/SearchInput.jsx";
+import SearchResults from "./components/Search/components/SearchResults.jsx";
+import SeriesMovies from "./components/SeriesMovies/index.jsx";
+import SingleMovies from "./components/SingleMovies/index.jsx";
+import TVShows from "./components/TVShows/index.jsx";
 import store from "./redux/store";
 
 const App = () => {

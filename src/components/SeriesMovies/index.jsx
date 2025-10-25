@@ -1,28 +1,28 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartoon, setCurrentPage } from "../../redux/slices/cartoonSlice";
+import { fetchSeries, setCurrentPage } from "../../redux/slices/seriesSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 import { Link, useNavigate } from "react-router-dom";
-import Loading from "../Loading";
+import Loading from "../Loading/index.jsx";
 
-const CartoonMovies = () => {
+const SeriesMovies = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const hoatHinh = useSelector((state) => state.hoatHinh.items);
-  const status = useSelector((state) => state.hoatHinh.status);
-  const error = useSelector((state) => state.hoatHinh.error);
-  const currentPage = useSelector((state) => state.hoatHinh.currentPage);
-  const totalPages = useSelector((state) => state.hoatHinh.totalPages);
+  const phimBo = useSelector((state) => state.phimBo.items);
+  const status = useSelector((state) => state.phimBo.status);
+  const error = useSelector((state) => state.phimBo.error);
+  const currentPage = useSelector((state) => state.phimBo.currentPage);
+  const totalPages = useSelector((state) => state.phimBo.totalPages);
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchCartoon(currentPage));
+      dispatch(fetchSeries(currentPage));
     }
   }, [status, dispatch, currentPage]);
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
     navigate(`?page=${newPage}`);
-    dispatch(fetchCartoon(newPage));
+    dispatch(fetchSeries(newPage));
   };
 
   if (status === "loading")
@@ -37,23 +37,24 @@ const CartoonMovies = () => {
     <>
       <div className="container mx-0">
         <h2 className="text-white text-2xl font-semibold">
-          Phim Hoạt Hình Mới Cập Nhật
+          Phim Bộ Mới Cập Nhật
         </h2>
         <div className="flex">
           <div className="w-full lg:w-3/4 px-4">
+            {" "}
             <ul className="flex flex-wrap gap-5 justify-between">
-              {hoatHinh.map((movie) => (
+              {phimBo.map((movie) => (
                 <li
-                  key={movie._id}
-                  className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
-                >
+                key={movie._id}
+                className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
+              >
                   <Link to={`/movie/${movie.slug}`}>
                     <h3 className="py-2">
                       {movie.name} ({movie.year})
                     </h3>
-
                     <div className="flex gap-5">
-                      <div className="flex items-center w-2/5">
+                      <div>
+                        {" "}
                         <img
                           src={`https://phimimg.com/${movie.poster_url}`}
                           alt={movie.name}
@@ -65,7 +66,7 @@ const CartoonMovies = () => {
                           }}
                         />
                       </div>
-                      <div className="flex flex-col gap-2 w-3/5">
+                      <div className="flex flex-col gap-2">
                         <p>Tình trạng: {movie.episode_current}</p>
                         <p>Chất lượng: {movie.quality}</p>
                         <p>Thời lượng: {movie.time}</p>
@@ -84,7 +85,7 @@ const CartoonMovies = () => {
                           Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}
                         </p>
                       </div>
-                    </div>
+                    </div>{" "}
                   </Link>
                 </li>
               ))}
@@ -114,4 +115,4 @@ const CartoonMovies = () => {
   );
 };
 
-export default CartoonMovies;
+export default SeriesMovies;

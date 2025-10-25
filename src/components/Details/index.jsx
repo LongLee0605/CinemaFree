@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import Loading from "../Loading";
+import Loading from "../Loading/index.jsx";
 
 const MovieDetails = () => {
   const { slug } = useParams();

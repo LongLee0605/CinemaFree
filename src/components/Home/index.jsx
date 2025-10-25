@@ -6,9 +6,9 @@ import { fetchLatestMovies } from "../../redux/slices/homeSlice";
 import { fetchSeries } from "../../redux/slices/seriesSlice";
 import { fetchSingle } from "../../redux/slices/singleSlice";
 import { fetchTVShow } from "../../redux/slices/tvShowSlice";
-import Carousel from "../Carousel";
-import CarouselNoHttp from "../CarouselNoHttp";
-import Loading from "../Loading";
+import Carousel from "../Carousel/index.jsx";
+import CarouselNoHttp from "../CarouselNoHttp/index.jsx";
+import Loading from "../Loading/index.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();

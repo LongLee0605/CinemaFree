@@ -1,30 +1,30 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSeries, setCurrentPage } from "../../redux/slices/seriesSlice";
-import { formatDateTimeVN } from "../../utils/dateUtils";
 import { Link, useNavigate } from "react-router-dom";
-import Loading from "../Loading";
+import { fetchSingle, setCurrentPage } from "../../redux/slices/singleSlice";
+import { formatDateTimeVN } from "../../utils/dateUtils";
+import Loading from "../Loading/index.jsx";
 
-const SeriesMovies = () => {
+const SingleMovies = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const phimBo = useSelector((state) => state.phimBo.items);
-  const status = useSelector((state) => state.phimBo.status);
-  const error = useSelector((state) => state.phimBo.error);
-  const currentPage = useSelector((state) => state.phimBo.currentPage);
-  const totalPages = useSelector((state) => state.phimBo.totalPages);
+  const phimLe = useSelector((state) => state.phimLe.items);
+  const status = useSelector((state) => state.phimLe.status);
+  const error = useSelector((state) => state.phimLe.error);
+  const currentPage = useSelector((state) => state.phimLe.currentPage);
+  const totalPages = useSelector((state) => state.phimLe.totalPages);
+
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchSeries(currentPage));
+      dispatch(fetchSingle(currentPage));
     }
   }, [status, dispatch, currentPage]);
 
   const handlePageChange = (newPage) => {
     dispatch(setCurrentPage(newPage));
     navigate(`?page=${newPage}`);
-    dispatch(fetchSeries(newPage));
+    dispatch(fetchSingle(newPage));
   };
-
   if (status === "loading")
     return (
       <div>
@@ -37,13 +37,12 @@ const SeriesMovies = () => {
     <>
       <div className="container mx-0">
         <h2 className="text-white text-2xl font-semibold">
-          Phim Bộ Mới Cập Nhật
+          Phim Lẻ Mới Cập Nhật
         </h2>
         <div className="flex">
           <div className="w-full lg:w-3/4 px-4">
-            {" "}
             <ul className="flex flex-wrap gap-5 justify-between">
-              {phimBo.map((movie) => (
+              {phimLe.map((movie) => (
                 <li
                 key={movie._id}
                 className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
@@ -52,9 +51,9 @@ const SeriesMovies = () => {
                     <h3 className="py-2">
                       {movie.name} ({movie.year})
                     </h3>
+
                     <div className="flex gap-5">
-                      <div>
-                        {" "}
+                      <div className="flex items-center w-2/5">
                         <img
                           src={`https://phimimg.com/${movie.poster_url}`}
                           alt={movie.name}
@@ -66,7 +65,7 @@ const SeriesMovies = () => {
                           }}
                         />
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2 w-3/5">
                         <p>Tình trạng: {movie.episode_current}</p>
                         <p>Chất lượng: {movie.quality}</p>
                         <p>Thời lượng: {movie.time}</p>
@@ -85,7 +84,7 @@ const SeriesMovies = () => {
                           Ngày cập nhật: {formatDateTimeVN(movie.modified.time)}
                         </p>
                       </div>
-                    </div>{" "}
+                    </div>
                   </Link>
                 </li>
               ))}
@@ -109,10 +108,10 @@ const SeriesMovies = () => {
           >
             &rarr;
           </button>
-        </div>
+        </div>{" "}
       </div>
     </>
   );
 };
 
-export default SeriesMovies;
+export default SingleMovies;

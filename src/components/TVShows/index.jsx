@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTVShow, setCurrentPage } from "../../redux/slices/tvShowSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
 import { Link, useNavigate } from "react-router-dom";
-import Loading from "../Loading";
+import Loading from "../Loading/index.jsx";
 
 const TVShows = () => {
   const dispatch = useDispatch();

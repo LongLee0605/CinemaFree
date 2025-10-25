@@ -10,7 +10,7 @@ import { fetchSeries } from "../../redux/slices/seriesSlice";
 import { fetchTVShow } from "../../redux/slices/tvShowSlice";
 import { fetchCartoon } from "../../redux/slices/cartoonSlice";
 import { formatDateTimeVN } from "../../utils/dateUtils";
-import Loading from "../Loading";
+import Loading from "../Loading/index.jsx";
 
 function NewMovies({ currentPage }) {
   const dispatch = useDispatch();

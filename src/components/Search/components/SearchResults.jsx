@@ -1,31 +1,28 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { fetchSingle, setCurrentPage } from "../../redux/slices/singleSlice";
-import { formatDateTimeVN } from "../../utils/dateUtils";
-import Loading from "../Loading";
-
-const SingleMovies = () => {
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchSearchResults } from "../../../redux/slices/searchSlice";
+import { formatDateTimeVN } from "../../../utils/dateUtils";
+import Loading from "../../Loading/index.jsx";
+import { Link } from "react-router-dom";
+const SearchResults = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const phimLe = useSelector((state) => state.phimLe.items);
-  const status = useSelector((state) => state.phimLe.status);
-  const error = useSelector((state) => state.phimLe.error);
-  const currentPage = useSelector((state) => state.phimLe.currentPage);
-  const totalPages = useSelector((state) => state.phimLe.totalPages);
+  const searchResults = useSelector((state) => state.search.results);
+  const status = useSelector((state) => state.search.status);
+  const error = useSelector((state) => state.search.error);
+  const totalPages = useSelector((state) => state.search.totalPages);
+  const currentPage = useSelector((state) => state.search.currentPage);
+  const isFetchingMore = useSelector((state) => state.search.isFetchingMore);
+  const limit = 20;
 
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchSingle(currentPage));
+  const handleLoadMore = () => {
+    if (!isFetchingMore) {
+      dispatch(
+        fetchSearchResults({ keyword: "kiem", limit, page: currentPage + 1 })
+      );
     }
-  }, [status, dispatch, currentPage]);
-
-  const handlePageChange = (newPage) => {
-    dispatch(setCurrentPage(newPage));
-    navigate(`?page=${newPage}`);
-    dispatch(fetchSingle(newPage));
   };
-  if (status === "loading")
+
+  if (status === "loading" && currentPage === 1)
     return (
       <div>
         <Loading />
@@ -36,22 +33,19 @@ const SingleMovies = () => {
   return (
     <>
       <div className="container mx-0">
-        <h2 className="text-white text-2xl font-semibold">
-          Phim Lẻ Mới Cập Nhật
-        </h2>
+        <h2 className="text-white text-2xl font-semibold">Kết quả tìm kiếm</h2>
         <div className="flex">
           <div className="w-full lg:w-3/4 px-4">
             <ul className="flex flex-wrap gap-5 justify-between">
-              {phimLe.map((movie) => (
+              {searchResults.map((movie) => (
                 <li
-                key={movie._id}
-                className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
-              >
+                  key={movie._id}
+                  className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
+                >
                   <Link to={`/movie/${movie.slug}`}>
                     <h3 className="py-2">
                       {movie.name} ({movie.year})
                     </h3>
-
                     <div className="flex gap-5">
                       <div className="flex items-center w-2/5">
                         <img
@@ -88,30 +82,30 @@ const SingleMovies = () => {
                   </Link>
                 </li>
               ))}
-            </ul>
+            </ul>{" "}
+            {totalPages - currentPage > 0 && (
+              <div className="text-center mt-8">
+                <button
+                  onClick={handleLoadMore}
+                  disabled={isFetchingMore}
+                  className="border-[1px] border-gray-300 rounded-lg px-6 py-2 hover:bg-gray-200 hover:text-gray-800"
+                >
+                  {isFetchingMore ? (
+                    <div>
+                      <Loading />
+                    </div>
+                  ) : (
+                    "Load More"
+                  )}
+                </button>
+              </div>
+            )}
           </div>
-          <div className="w-1/4 hidden lg:block">SideBar</div>
+          <div className="w-1/4 hidden lg:block"></div>
         </div>
-        <div className="flex justify-center gap-5 py-10">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            &larr;
-          </button>
-          <div>
-            {currentPage} / {totalPages}
-          </div>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            &rarr;
-          </button>
-        </div>{" "}
       </div>
     </>
   );
 };
 
-export default SingleMovies;
+export default SearchResults;

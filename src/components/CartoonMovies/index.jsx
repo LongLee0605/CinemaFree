@@ -1,28 +1,31 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchSearchResults } from "../../../redux/slices/searchSlice";
-import { formatDateTimeVN } from "../../../utils/dateUtils";
-import Loading from "../../Loading";
-import { Link } from "react-router-dom";
-const SearchResults = () => {
-  const dispatch = useDispatch();
-  const searchResults = useSelector((state) => state.search.results);
-  const status = useSelector((state) => state.search.status);
-  const error = useSelector((state) => state.search.error);
-  const totalPages = useSelector((state) => state.search.totalPages);
-  const currentPage = useSelector((state) => state.search.currentPage);
-  const isFetchingMore = useSelector((state) => state.search.isFetchingMore);
-  const limit = 20;
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartoon, setCurrentPage } from "../../redux/slices/cartoonSlice";
+import { formatDateTimeVN } from "../../utils/dateUtils";
+import { Link, useNavigate } from "react-router-dom";
+import Loading from "../Loading/index.jsx";
 
-  const handleLoadMore = () => {
-    if (!isFetchingMore) {
-      dispatch(
-        fetchSearchResults({ keyword: "kiem", limit, page: currentPage + 1 })
-      );
+const CartoonMovies = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const hoatHinh = useSelector((state) => state.hoatHinh.items);
+  const status = useSelector((state) => state.hoatHinh.status);
+  const error = useSelector((state) => state.hoatHinh.error);
+  const currentPage = useSelector((state) => state.hoatHinh.currentPage);
+  const totalPages = useSelector((state) => state.hoatHinh.totalPages);
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchCartoon(currentPage));
     }
+  }, [status, dispatch, currentPage]);
+
+  const handlePageChange = (newPage) => {
+    dispatch(setCurrentPage(newPage));
+    navigate(`?page=${newPage}`);
+    dispatch(fetchCartoon(newPage));
   };
 
-  if (status === "loading" && currentPage === 1)
+  if (status === "loading")
     return (
       <div>
         <Loading />
@@ -33,11 +36,13 @@ const SearchResults = () => {
   return (
     <>
       <div className="container mx-0">
-        <h2 className="text-white text-2xl font-semibold">Kết quả tìm kiếm</h2>
+        <h2 className="text-white text-2xl font-semibold">
+          Phim Hoạt Hình Mới Cập Nhật
+        </h2>
         <div className="flex">
           <div className="w-full lg:w-3/4 px-4">
             <ul className="flex flex-wrap gap-5 justify-between">
-              {searchResults.map((movie) => (
+              {hoatHinh.map((movie) => (
                 <li
                   key={movie._id}
                   className="py-4 px-3 shadow-md shadow-gray-500/50 rounded-xl w-full lg:w-[46%] md:w-[48%] sm:w-[48%]"
@@ -46,6 +51,7 @@ const SearchResults = () => {
                     <h3 className="py-2">
                       {movie.name} ({movie.year})
                     </h3>
+
                     <div className="flex gap-5">
                       <div className="flex items-center w-2/5">
                         <img
@@ -82,30 +88,30 @@ const SearchResults = () => {
                   </Link>
                 </li>
               ))}
-            </ul>{" "}
-            {totalPages - currentPage > 0 && (
-              <div className="text-center mt-8">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={isFetchingMore}
-                  className="border-[1px] border-gray-300 rounded-lg px-6 py-2 hover:bg-gray-200 hover:text-gray-800"
-                >
-                  {isFetchingMore ? (
-                    <div>
-                      <Loading />
-                    </div>
-                  ) : (
-                    "Load More"
-                  )}
-                </button>
-              </div>
-            )}
+            </ul>
           </div>
-          <div className="w-1/4 hidden lg:block"></div>
+          <div className="w-1/4 hidden lg:block">SideBar</div>
+        </div>
+        <div className="flex justify-center gap-5 py-10">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            &larr;
+          </button>
+          <div>
+            {currentPage} / {totalPages}
+          </div>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            &rarr;
+          </button>
         </div>
       </div>
     </>
   );
 };
 
-export default SearchResults;
+export default CartoonMovies;
