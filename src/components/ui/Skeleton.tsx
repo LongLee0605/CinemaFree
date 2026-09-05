@@ -7,7 +7,7 @@ interface SkeletonProps {
 export function Skeleton({ className }: SkeletonProps) {
   return (
     <div className={cn('relative overflow-hidden rounded-xl bg-surface-elevated', className)}>
-      <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+      <div className="via-white/6 absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent to-transparent" />
     </div>
   );
 }

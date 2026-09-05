@@ -11,6 +11,9 @@ const SingleMovies = lazy(() => import('@/components/SingleMovies'));
 const SeriesMovies = lazy(() => import('@/components/SeriesMovies'));
 const CartoonMovies = lazy(() => import('@/components/CartoonMovies'));
 const TVShows = lazy(() => import('@/components/TVShows'));
+const GenreMovies = lazy(() => import('@/components/GenreMovies'));
+const CountryMovies = lazy(() => import('@/components/CountryMovies'));
+const YearMovies = lazy(() => import('@/components/YearMovies'));
 const MovieDetails = lazy(() => import('@/components/Details'));
 
 function App() {
@@ -18,7 +21,6 @@ function App() {
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Layout searchComponent={<SearchInput />}>
         <Suspense fallback={<Loading fullScreen />}>
-          {' '}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/phim-moi-cap-nhat" element={<NewMovies />} />
@@ -26,6 +28,9 @@ function App() {
             <Route path="/phim-bo" element={<SeriesMovies />} />
             <Route path="/phim-hoat-hinh" element={<CartoonMovies />} />
             <Route path="/tv-shows" element={<TVShows />} />
+            <Route path="/the-loai/:slug" element={<GenreMovies />} />
+            <Route path="/quoc-gia/:slug" element={<CountryMovies />} />
+            <Route path="/nam/:year" element={<YearMovies />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/movie/:slug" element={<MovieDetails />} />
           </Routes>

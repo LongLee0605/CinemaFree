@@ -26,6 +26,19 @@ interface MovieListProps {
   subtitle?: string;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  show: { opacity: 1, y: 0, scale: 1 },
+};
+
 export function MovieList({
   title,
   movies,
@@ -46,7 +59,7 @@ export function MovieList({
 }: MovieListProps) {
   if (isLoading) {
     return (
-      <section className={cn('py-6', className)}>
+      <section className={cn('py-8', className)}>
         <div className="container-app">
           <SectionHeader title={title} icon={icon} subtitle={subtitle} />
           <MovieListSkeleton />
@@ -57,7 +70,7 @@ export function MovieList({
 
   if (error) {
     return (
-      <section className={cn('py-6', className)}>
+      <section className={cn('py-8', className)}>
         <div className="container-app">
           <SectionHeader title={title} icon={icon} subtitle={subtitle} />
           <ErrorFallback
@@ -72,10 +85,10 @@ export function MovieList({
 
   if (movies.length === 0) {
     return (
-      <section className={cn('py-6', className)}>
+      <section className={cn('py-8', className)}>
         <div className="container-app">
           <SectionHeader title={title} icon={icon} subtitle={subtitle} />
-          <div className="rounded-2xl border border-border bg-surface-elevated/50 p-8 text-center text-muted">
+          <div className="rounded-2xl border border-border-strong bg-surface-elevated/50 p-8 text-center text-muted">
             {emptyMessage}
           </div>
         </div>
@@ -84,7 +97,7 @@ export function MovieList({
   }
 
   return (
-    <section className={cn('py-6', className)}>
+    <section className={cn('py-8', className)}>
       <div className="container-app">
         <SectionHeader
           title={title}
@@ -95,21 +108,17 @@ export function MovieList({
         />
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
           className={cn(
-            'grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6',
+            'grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6',
             gridClassName
           )}
         >
-          {movies.map((movie, index) => (
-            <motion.div
-              key={movie._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-            >
+          {movies.map((movie) => (
+            <motion.div key={movie._id} variants={itemVariants}>
               <MovieCard movie={movie} />
             </motion.div>
           ))}

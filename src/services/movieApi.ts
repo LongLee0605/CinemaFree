@@ -24,6 +24,33 @@ export const getMoviesByCategory = async (
   return response.data;
 };
 
+export const getMoviesByGenre = async (
+  genreSlug: string,
+  page = 1
+): Promise<CategoryMoviesResponse> => {
+  const response = await api.get<CategoryMoviesResponse>(`/v1/api/the-loai/${genreSlug}`, {
+    params: { page },
+  });
+  return response.data;
+};
+
+export const getMoviesByCountry = async (
+  countrySlug: string,
+  page = 1
+): Promise<CategoryMoviesResponse> => {
+  const response = await api.get<CategoryMoviesResponse>(`/v1/api/quoc-gia/${countrySlug}`, {
+    params: { page },
+  });
+  return response.data;
+};
+
+export const getMoviesByYear = async (year: string, page = 1): Promise<CategoryMoviesResponse> => {
+  const response = await api.get<CategoryMoviesResponse>(`/v1/api/nam/${year}`, {
+    params: { page },
+  });
+  return response.data;
+};
+
 export const searchMovies = async (
   keyword: string,
   page = 1,

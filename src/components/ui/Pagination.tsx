@@ -28,12 +28,12 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
   };
 
   return (
-    <nav className="flex items-center justify-center gap-2 py-10" aria-label="Pagination">
+    <nav className="flex items-center justify-center gap-2 py-12" aria-label="Pagination">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={cn(
-          'flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-surface-elevated transition-all',
+          'flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-surface-elevated transition-all',
           currentPage === 1
             ? 'cursor-not-allowed text-muted-foreground'
             : 'text-foreground hover:border-primary/50 hover:text-primary hover:shadow-glow'
@@ -53,9 +53,9 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
             key={page}
             onClick={() => onPageChange(page as number)}
             className={cn(
-              'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold transition-all',
+              'flex h-12 w-12 items-center justify-center rounded-xl border text-sm font-bold transition-all',
               currentPage === page
-                ? 'border-transparent bg-gradient-to-r from-primary to-primary-hover text-black shadow-glow'
+                ? 'border-transparent bg-gradient-to-r from-primary to-secondary text-black shadow-glow'
                 : 'border-border bg-surface-elevated text-foreground hover:border-primary/50 hover:text-primary hover:shadow-glow'
             )}
             aria-label={`Trang ${page}`}
@@ -70,7 +70,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={cn(
-          'flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-surface-elevated transition-all',
+          'flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-surface-elevated transition-all',
           currentPage === totalPages
             ? 'cursor-not-allowed text-muted-foreground'
             : 'text-foreground hover:border-primary/50 hover:text-primary hover:shadow-glow'

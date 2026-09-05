@@ -21,10 +21,10 @@ export function ErrorFallback({
         className
       )}
     >
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/20 to-primary/10 text-primary">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/30 to-primary/20 text-primary shadow-glow-accent">
         <AlertTriangle className="h-7 w-7" />
       </div>
-      <h3 className="mb-2 text-lg font-bold text-foreground">{title}</h3>
+      <h3 className="mb-2 text-lg font-black text-foreground">{title}</h3>
       <p className="mb-6 max-w-md text-sm text-muted">{message}</p>
       {onRetry && (
         <button onClick={onRetry} className="btn-secondary">

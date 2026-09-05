@@ -8,6 +8,19 @@ import { Seo } from '@/components/ui/Seo';
 import { GradientText } from '@/components/ui/GradientText';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  show: { opacity: 1, y: 0, scale: 1 },
+};
+
 export function SearchResults() {
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get('keyword') || '';
@@ -29,10 +42,10 @@ export function SearchResults() {
     return (
       <div className="container-app py-12">
         <div className="flex min-h-[300px] flex-col items-center justify-center rounded-3xl border border-border-strong bg-surface-elevated/50 p-8 text-center">
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 text-primary">
+          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 text-primary shadow-glow">
             <Search className="h-8 w-8" />
           </div>
-          <h2 className="text-xl font-bold text-foreground">Bạn muốn tìm phim gì?</h2>
+          <h2 className="text-xl font-black text-foreground">Bạn muốn tìm phim gì?</h2>
           <p className="mt-2 text-muted">Nhập tên phim, diễn viên hoặc thể loại để bắt đầu.</p>
         </div>
       </div>
@@ -64,7 +77,7 @@ export function SearchResults() {
       <SectionHeader
         title={
           <>
-            Kết quả cho: <GradientText>{keyword}</GradientText>
+            Kết quả cho: <GradientText variant="animated">{keyword}</GradientText>
           </>
         }
         subtitle={isSearching ? 'Đang tìm kiếm...' : `Tìm thấy ${totalItems} kết quả`}
@@ -83,7 +96,7 @@ export function SearchResults() {
       ) : items.length === 0 ? (
         <div className="flex min-h-[300px] flex-col items-center justify-center rounded-3xl border border-border-strong bg-surface-elevated/50 p-8 text-center">
           <SearchX className="mx-auto mb-4 h-12 w-12 text-muted" />
-          <h2 className="text-xl font-bold text-foreground">Không tìm thấy kết quả</h2>
+          <h2 className="text-xl font-black text-foreground">Không tìm thấy kết quả</h2>
           <p className="mt-2 text-muted">
             Không tìm thấy phim nào cho từ khóa &quot;{keyword}&quot;. Vui lòng thử từ khóa khác.
           </p>
@@ -98,17 +111,13 @@ export function SearchResults() {
           )}
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
             className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
           >
-            {items.map((movie, index) => (
-              <motion.div
-                key={movie._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.03 }}
-              >
+            {items.map((movie) => (
+              <motion.div key={movie._id} variants={itemVariants}>
                 <MovieCard movie={movie} />
               </motion.div>
             ))}

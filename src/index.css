@@ -4,21 +4,22 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --surface: 240 6% 6%;
-    --surface-elevated: 240 7% 9%;
-    --surface-light: 240 6% 13%;
-    --border: 240 6% 17%;
-    --border-strong: 240 5% 27%;
+    --background: 0 0% 1%;
+    --surface: 240 10% 3%;
+    --surface-elevated: 240 9% 6%;
+    --surface-light: 240 8% 10%;
+    --border: 240 7% 15%;
+    --border-strong: 240 6% 24%;
+    --border-glow: 240 5% 36%;
     --primary: 45 91% 52%;
     --primary-hover: 48 100% 65%;
-    --secondary: 193 100% 50%;
-    --secondary-hover: 193 100% 60%;
+    --secondary: 186 100% 50%;
+    --secondary-hover: 186 100% 60%;
     --accent: 349 100% 57%;
     --accent-hover: 349 100% 67%;
     --foreground: 0 0% 98%;
-    --muted: 240 4% 46%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 220 9% 64%;
+    --muted-foreground: 220 9% 42%;
   }
 
   * {
@@ -35,8 +36,8 @@
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-track {
@@ -48,7 +49,11 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
+    @apply bg-border-glow;
+  }
+
+  ::-webkit-scrollbar-corner {
+    @apply bg-surface;
   }
 
   ::selection {
@@ -59,6 +64,10 @@
 @layer components {
   .container-app {
     @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+
+  .container-fluid {
+    @apply w-full px-4 sm:px-6 lg:px-8 xl:px-12;
   }
 
   .gradient-overlay {
@@ -73,12 +82,25 @@
     @apply bg-gradient-gold bg-clip-text text-transparent;
   }
 
+  .gradient-text-animated {
+    background: linear-gradient(90deg, #f5c518, #ff2d55, #00f0ff, #f5c518);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShimmer 4s linear infinite;
+  }
+
   .text-glow {
-    text-shadow: 0 0 30px rgba(245, 197, 24, 0.4), 0 0 60px rgba(245, 197, 24, 0.2);
+    text-shadow:
+      0 0 30px rgba(245, 197, 24, 0.5),
+      0 0 60px rgba(245, 197, 24, 0.3);
   }
 
   .text-glow-cyan {
-    text-shadow: 0 0 30px rgba(0, 212, 255, 0.4), 0 0 60px rgba(0, 212, 255, 0.2);
+    text-shadow:
+      0 0 30px rgba(0, 240, 255, 0.5),
+      0 0 60px rgba(0, 240, 255, 0.3);
   }
 
   .card-hover {
@@ -99,8 +121,10 @@
 
   .glow-border::before {
     content: '';
-    @apply absolute -inset-px rounded-2xl bg-gradient-to-r from-primary/50 via-secondary/50 to-accent/50 opacity-0 transition-opacity duration-300;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    @apply absolute -inset-px rounded-2xl bg-gradient-to-r from-primary/60 via-secondary/60 to-accent/60 opacity-0 transition-opacity duration-300;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     mask-composite: exclude;
     padding: 1px;
   }
@@ -123,29 +147,92 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary-hover px-5 py-2.5 font-semibold text-black shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:brightness-110;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary-hover px-6 py-3 font-semibold text-black shadow-glow transition-all duration-300 hover:shadow-glow-xl hover:brightness-110;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border-strong bg-surface-elevated px-5 py-2.5 font-medium text-foreground transition-all duration-300 hover:border-secondary/50 hover:text-secondary hover:shadow-glow-secondary;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border-strong bg-surface-elevated px-6 py-3 font-medium text-foreground transition-all duration-300 hover:border-secondary/50 hover:text-secondary hover:shadow-glow-secondary;
+  }
+
+  .btn-circle {
+    @apply flex h-12 w-12 items-center justify-center rounded-full border border-border-strong bg-surface-elevated/80 text-foreground backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:text-primary hover:shadow-glow;
+  }
+
+  .btn-circle-lg {
+    @apply flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-black shadow-glow-lg transition-all duration-300 hover:scale-110 hover:shadow-glow-xl;
   }
 
   .section-title {
-    @apply relative text-2xl font-bold tracking-tight text-foreground md:text-3xl;
+    @apply relative text-2xl font-black tracking-tight text-foreground md:text-3xl lg:text-4xl;
   }
 
   .section-title::after {
     content: '';
-    @apply absolute -bottom-2 left-0 h-1 w-16 rounded-full bg-gradient-to-r from-primary to-secondary;
+    @apply absolute -bottom-3 left-0 h-1.5 w-20 rounded-full bg-gradient-to-r from-primary to-secondary;
   }
 
   .badge-pill {
-    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-bold backdrop-blur-sm;
+  }
+
+  .badge-gradient {
+    background: linear-gradient(135deg, rgba(245, 197, 24, 0.2), rgba(255, 45, 85, 0.15));
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-primary/20 px-3 py-1.5 text-xs font-bold text-primary;
+  }
+
+  .movie-content p {
+    @apply mb-4 leading-relaxed last:mb-0;
+  }
+
+  .movie-content strong,
+  .movie-content b {
+    @apply font-bold text-foreground;
+  }
+
+  .movie-content em,
+  .movie-content i {
+    @apply italic text-muted;
+  }
+
+  .movie-content a {
+    @apply text-primary underline underline-offset-2 transition-colors hover:text-primary-hover;
+  }
+
+  .movie-content br {
+    @apply block content-[''];
+  }
+
+  .nav-link {
+    @apply relative flex items-center gap-1 text-sm font-medium text-muted transition-colors hover:text-foreground;
   }
 
   .noise {
     @apply pointer-events-none fixed inset-0 z-50 opacity-[0.015];
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .hero-vignette {
+    box-shadow:
+      inset 0 -160px 160px -60px rgba(0, 0, 0, 0.95),
+      inset 160px 0 160px -100px rgba(0, 0, 0, 0.85);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gradient-border-bottom {
+    @apply relative;
+  }
+
+  .gradient-border-bottom::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent;
   }
 }
 
@@ -153,6 +240,13 @@
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -166,11 +260,22 @@
   }
 
   .bg-mesh {
-    background-color: #050505;
+    background-color: #030303;
     background-image:
-      radial-gradient(at 0% 0%, rgba(245, 197, 24, 0.08) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(0, 212, 255, 0.06) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(255, 45, 85, 0.05) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(245, 197, 24, 0.04) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(245, 197, 24, 0.08) 0px, transparent 40%),
+      radial-gradient(at 100% 0%, rgba(0, 240, 255, 0.06) 0px, transparent 40%),
+      radial-gradient(at 100% 100%, rgba(255, 45, 85, 0.05) 0px, transparent 40%),
+      radial-gradient(at 0% 100%, rgba(245, 197, 24, 0.04) 0px, transparent 40%);
+  }
+
+  .bg-grid {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  }
+
+  .will-change-transform {
+    will-change: transform;
   }
 }

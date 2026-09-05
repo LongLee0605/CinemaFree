@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { cn } from '@/lib/utils';
 
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -9,7 +9,7 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   aspectRatio?: 'poster' | 'video' | 'square' | 'auto';
 }
 
-export function Image({
+function Image({
   src,
   alt,
   className,
@@ -64,8 +64,11 @@ export function Image({
         {...props}
       />
       {!isLoaded && (
-        <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+        <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       )}
     </div>
   );
 }
+
+export default memo(Image);
+export { Image };

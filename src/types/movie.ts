@@ -91,6 +91,7 @@ export interface LatestMoviesResponse {
 
 export interface CategoryMoviesData {
   items: Movie[];
+  titlePage?: string;
   params: {
     pagination: Pagination;
     type_slug?: string;

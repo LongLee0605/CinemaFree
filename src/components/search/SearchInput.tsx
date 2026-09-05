@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
-import { Search, X } from 'lucide-react';
+import { Search, X, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SearchInputProps {
@@ -25,6 +25,7 @@ export function SearchInput({
   const isSearchPage = location.pathname === '/search';
 
   const [keyword, setKeyword] = useState(urlKeyword);
+  const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -71,26 +72,30 @@ export function SearchInput({
     <form onSubmit={handleSubmit} className={cn('relative', className)}>
       <div
         className={cn(
-          'relative flex items-center overflow-hidden rounded-2xl border border-border bg-surface-elevated/80 transition-all duration-300 focus-within:border-primary/50 focus-within:bg-surface-elevated focus-within:shadow-glow',
-          variant === 'full' ? 'h-14' : 'h-11'
+          'relative flex items-center overflow-hidden rounded-full border bg-surface-elevated/80 transition-all duration-300',
+          variant === 'full' ? 'h-14' : 'h-11',
+          isFocused
+            ? 'border-primary/50 bg-surface-elevated shadow-glow'
+            : 'border-border-strong hover:border-border-glow'
         )}
       >
-        <button
-          type="submit"
+        <div
           className={cn(
-            'ml-3 shrink-0 text-muted transition-colors hover:text-primary',
-            variant === 'full' ? 'h-5 w-5' : 'h-4 w-4'
+            'ml-3 flex shrink-0 items-center justify-center rounded-full transition-all',
+            isFocused ? 'text-primary' : 'text-muted',
+            variant === 'full' ? 'h-6 w-6' : 'h-5 w-5'
           )}
-          aria-label="Tìm kiếm"
         >
           <Search className="h-full w-full" />
-        </button>
+        </div>
         <input
           ref={inputRef}
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
           className={cn(
             'w-full bg-transparent px-3 text-foreground placeholder:text-muted-foreground focus:outline-none',
@@ -106,6 +111,12 @@ export function SearchInput({
           >
             <X className={cn('h-4 w-4', variant === 'full' && 'h-5 w-5')} />
           </button>
+        )}
+        {isFocused && !keyword && (
+          <div className="mr-3 flex items-center gap-1 text-xs text-muted">
+            <Sparkles className="h-3 w-3 text-primary" />
+            Enter để tìm
+          </div>
         )}
       </div>
     </form>
