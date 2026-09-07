@@ -121,7 +121,7 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
-        <div className="relative -mt-18">
+        <div className="relative -mt-0 md:-mt-18">
           <Hero items={heroItems} />
         </div>
         <CategoryCards />

@@ -124,7 +124,7 @@ export interface SearchMoviesResponse {
   data: SearchMoviesData;
 }
 
-export type MovieCategory = 'phim-le' | 'phim-bo' | 'hoat-hinh' | 'tv-shows';
+export type MovieCategory = 'phim-le' | 'phim-bo' | 'hoat-hinh' | 'tv-shows' | 'phim-chieu-rap';
 
 export interface PageParams {
   page?: number;

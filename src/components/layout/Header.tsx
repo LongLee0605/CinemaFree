@@ -1,6 +1,6 @@
 import { useState, isValidElement, cloneElement, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, ChevronDown, Tv, Sparkles } from 'lucide-react';
+import { Menu, X, ChevronDown, Tv, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { GradientText } from '@/components/ui/GradientText';
@@ -189,13 +189,6 @@ function Header({ searchComponent }: HeaderProps) {
 
             {/* Mobile actions */}
             <div className="flex items-center gap-2 lg:hidden">
-              <Link
-                to="/search"
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-strong bg-surface-elevated text-muted transition-all hover:border-primary/50 hover:text-primary"
-                aria-label="Tìm kiếm"
-              >
-                <Search className="h-5 w-5" />
-              </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-strong bg-surface-elevated text-muted transition-all hover:border-primary/50 hover:text-primary"

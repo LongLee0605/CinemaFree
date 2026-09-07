@@ -11,6 +11,7 @@ const SingleMovies = lazy(() => import('@/components/SingleMovies'));
 const SeriesMovies = lazy(() => import('@/components/SeriesMovies'));
 const CartoonMovies = lazy(() => import('@/components/CartoonMovies'));
 const TVShows = lazy(() => import('@/components/TVShows'));
+const TheaterMovies = lazy(() => import('@/components/TheaterMovies'));
 const GenreMovies = lazy(() => import('@/components/GenreMovies'));
 const CountryMovies = lazy(() => import('@/components/CountryMovies'));
 const YearMovies = lazy(() => import('@/components/YearMovies'));
@@ -28,6 +29,7 @@ function App() {
             <Route path="/phim-bo" element={<SeriesMovies />} />
             <Route path="/phim-hoat-hinh" element={<CartoonMovies />} />
             <Route path="/tv-shows" element={<TVShows />} />
+            <Route path="/phim-chieu-rap" element={<TheaterMovies />} />
             <Route path="/the-loai/:slug" element={<GenreMovies />} />
             <Route path="/quoc-gia/:slug" element={<CountryMovies />} />
             <Route path="/nam/:year" element={<YearMovies />} />

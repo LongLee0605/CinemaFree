@@ -29,7 +29,7 @@ export function SectionHeader({
         )}
         <div>
           <h2 className="section-title">{title}</h2>
-          {subtitle && <p className="mt-3 text-sm font-medium text-muted">{subtitle}</p>}
+          {subtitle && <p className="mt-2 pt-2 text-sm font-medium text-muted">{subtitle}</p>}
         </div>
       </div>
 

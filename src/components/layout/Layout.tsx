@@ -19,7 +19,7 @@ export function Layout({ children, searchComponent }: LayoutProps) {
     <div className="bg-mesh relative flex min-h-screen flex-col">
       <div className="noise" aria-hidden="true" />
       <Header searchComponent={searchComponent} />
-      <main className="relative flex-1 pt-20">{children}</main>
+      <main className="relative flex-1 pt-24 md:pt-20">{children}</main>
       <Footer />
     </div>
   );

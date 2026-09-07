@@ -1,16 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ChevronRight,
-  Clapperboard,
-  Crown,
-  Baby,
-  Bomb,
-  Ghost,
-  Sparkles,
-  Layers,
-} from 'lucide-react';
+import { ChevronRight, Clapperboard, Crown, Baby, Bomb, Ghost, Rocket, Layers } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Category {
@@ -27,11 +18,11 @@ const categories: Category[] = [
   {
     id: 'theaters',
     name: 'Chiếu Rạp',
-    slug: '/phim-moi-cap-nhat',
+    slug: '/phim-chieu-rap',
     gradient: 'from-cat-theaters to-cat-theaters-light',
     shadow: 'shadow-blue-900/40',
     icon: Clapperboard,
-    description: 'Phim mới nhất',
+    description: 'Phim chiếu rạp',
   },
   {
     id: 'period',
@@ -70,13 +61,13 @@ const categories: Category[] = [
     description: 'Phim kinh dị',
   },
   {
-    id: 'anime',
-    name: 'Anime',
-    slug: '/the-loai/hoat-hinh',
-    gradient: 'from-cat-anime to-cat-anime-light',
-    shadow: 'shadow-rose-900/40',
-    icon: Sparkles,
-    description: 'Anime mới',
+    id: 'scifi',
+    name: 'Viễn Tưởng',
+    slug: '/the-loai/vien-tuong',
+    gradient: 'from-cat-scifi to-cat-scifi-light',
+    shadow: 'shadow-cyan-900/40',
+    icon: Rocket,
+    description: 'Viễn tưởng hay',
   },
   {
     id: 'more',
@@ -109,7 +100,7 @@ function CategoryCards() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h2 className="section-title">Khám phá thể loại</h2>
-            <p className="mt-3 text-sm text-muted">Chọn chủ đề yêu thích để bắt đầu</p>
+            <p className="mt-3 pt-2 text-sm text-muted">Chọn chủ đề yêu thích để bắt đầu</p>
           </div>
         </div>
 
@@ -118,16 +109,20 @@ function CategoryCards() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-50px' }}
-          className="scrollbar-hide flex gap-4 overflow-x-auto pb-4"
+          className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:-mx-0 sm:px-0 md:gap-4"
         >
           {categories.map((category) => {
             const Icon = category.icon;
             return (
-              <motion.div key={category.id} variants={itemVariant} className="shrink-0">
+              <motion.div
+                key={category.id}
+                variants={itemVariant}
+                className="shrink-0 snap-start overflow-hidden rounded-2xl"
+              >
                 <Link
                   to={category.slug}
                   className={cn(
-                    'group relative flex h-40 w-40 flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-5 text-white shadow-xl transition-all duration-300 hover:-translate-y-3 hover:scale-105 hover:shadow-2xl sm:h-44 sm:w-44 md:h-48 md:w-52',
+                    'group relative flex h-36 w-36 flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-4 text-white shadow-xl transition-all duration-300 hover:-translate-y-3 hover:scale-105 hover:shadow-2xl active:scale-95 sm:h-40 sm:w-40 md:h-48 md:w-52 md:p-5',
                     category.gradient,
                     category.shadow
                   )}

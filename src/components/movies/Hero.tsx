@@ -7,7 +7,6 @@ import {
   Info,
   ChevronLeft,
   ChevronRight,
-  Star,
   Calendar,
   Clock,
   Sparkles,
@@ -70,7 +69,7 @@ function Hero({ items }: HeroProps) {
   return (
     <section
       ref={containerRef}
-      className="relative h-[420px] w-full overflow-hidden sm:h-[480px] md:h-[620px] lg:h-[720px]"
+      className="relative h-[84vh] w-full overflow-hidden sm:h-[480px] md:h-[620px] lg:h-[720px]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -89,9 +88,9 @@ function Hero({ items }: HeroProps) {
             className="h-full w-full object-cover"
             style={{ y, scale: 1.1 }}
           />
-          <div className="absolute inset-0 bg-gradient-hero" />
-          <div className="absolute inset-0 bg-gradient-hero-bottom" />
-          <div className="hero-vignette absolute inset-0" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-hero" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-hero-bottom" />
+          <div className="hero-vignette pointer-events-none absolute inset-0" />
 
           {/* Animated gradient orbs */}
           <div className="absolute left-1/4 top-1/3 h-96 w-96 animate-pulse-glow rounded-full bg-primary/10 blur-[120px]" />
@@ -106,14 +105,11 @@ function Hero({ items }: HeroProps) {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-2xl"
+            className="relative z-20 max-w-2xl"
           >
             <div className="mb-5 flex flex-wrap items-center gap-2">
               <span className="badge-gradient">
                 <Sparkles className="h-3.5 w-3.5" /> Nổi bật
-              </span>
-              <span className="badge-pill border-primary/30 bg-primary/15 text-primary">
-                <Star className="h-3.5 w-3.5" /> IMDb 7.5
               </span>
               <span className="badge-pill border-border bg-surface-elevated/90 text-white">
                 {typeLabel}
@@ -150,15 +146,20 @@ function Hero({ items }: HeroProps) {
                 `Xem phim ${movie.name} chất lượng cao, miễn phí tại CinemaFree.`}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4">
-              <Link to={`/movie/${movie.slug}`} className="btn-circle-lg group">
+            <div className="relative z-20 flex flex-wrap items-center gap-4">
+              <Link
+                to={`/movie/${movie.slug}`}
+                className="btn-circle-lg group touch-manipulation"
+                aria-label="Xem phim"
+              >
                 <Play className="h-7 w-7 fill-current transition-transform group-hover:scale-110" />
               </Link>
 
               <button
+                type="button"
                 onClick={() => setIsLiked(!isLiked)}
                 className={cn(
-                  'btn-circle',
+                  'btn-circle touch-manipulation',
                   isLiked && 'border-accent/50 text-accent hover:border-accent hover:text-accent'
                 )}
                 aria-label={isLiked ? 'Bỏ yêu thích' : 'Yêu thích'}
@@ -166,7 +167,11 @@ function Hero({ items }: HeroProps) {
                 <Heart className={cn('h-5 w-5', isLiked && 'fill-accent')} />
               </button>
 
-              <Link to={`/movie/${movie.slug}`} className="btn-circle" aria-label="Thông tin phim">
+              <Link
+                to={`/movie/${movie.slug}`}
+                className="btn-circle touch-manipulation"
+                aria-label="Thông tin phim"
+              >
                 <Info className="h-5 w-5" />
               </Link>
             </div>

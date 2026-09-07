@@ -38,6 +38,8 @@ const config: Config = {
         'cat-horror-light': '#fb923c',
         'cat-anime': '#be123c',
         'cat-anime-light': '#fb7185',
+        'cat-scifi': '#0e7490',
+        'cat-scifi-light': '#22d3ee',
         'cat-more': '#374151',
         'cat-more-light': '#6b7280',
       },
